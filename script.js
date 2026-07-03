@@ -8,7 +8,6 @@ const state = {
   glasses: "ничего",
   ears: "ничего",
   features: [],
-  mask: "ничего",
   leftHand: "ничего",
   rightHand: "ничего",
   traits: []
@@ -77,6 +76,10 @@ const downloadBtn = document.getElementById("downloadBtn");
 const shareBtn = document.getElementById("shareBtn");
 const restartBtn = document.getElementById("restartBtn");
 
+const downloadOverlay = document.getElementById("downloadOverlay");
+const downloadImage = document.getElementById("downloadImage");
+const closeDownloadBtn = document.getElementById("closeDownloadBtn");
+
 const traitsList = document.getElementById("traitsList");
 const traitsCounter = document.getElementById("traitsCounter");
 
@@ -130,16 +133,16 @@ function updatePortrait() {
 
   const hairColors = {
     "белые": "#ebe7df",
-    "блонд": "#d8bd77",
+    "блонд": "#c9ad78",
     "русые": "#8a6a4f",
     "темные": "#4a342d",
-    "рыжие": "#aa4d2f",
-    "вишнево-красные": "#6b232f",
+    "рыжие": "#c85a24",
+    "вишнево-красные": "#4b1421",
     "черные": "#151515"
   };
 
   const eyeColors = {
-    "светло-серые": "#d7dbe2",
+    "светло-серые": "#eef1f5",
     "серые": "#909aa6",
     "карие": "#5b3422",
     "голубые": "#88aeca",
@@ -298,7 +301,6 @@ function updatePortrait() {
   if (state.glasses !== "ничего") details.push(state.glasses);
   if (state.ears !== "ничего") details.push(state.ears);
   if (state.features.length) details.push(...state.features);
-  if (state.mask !== "ничего") details.push(state.mask);
   if (state.leftHand !== "ничего") details.push(`левая: ${state.leftHand}`);
   if (state.rightHand !== "ничего") details.push(`правая: ${state.rightHand}`);
 
@@ -430,19 +432,38 @@ function renderFinalTraits() {
 
 async function downloadCard() {
   try {
+    if (!resultCard || !downloadOverlay || !downloadImage) return;
+
+    downloadBtn.textContent = "готовим карточку...";
+    downloadBtn.disabled = true;
+
     const canvas = await html2canvas(resultCard, {
-      backgroundColor: null,
+      backgroundColor: "#f4f0e9",
       scale: 3,
-      useCORS: true
+      useCORS: true,
+      allowTaint: true,
+      scrollX: 0,
+      scrollY: 0,
+      windowWidth: document.documentElement.offsetWidth,
+      windowHeight: document.documentElement.offsetHeight
     });
 
-    const link = document.createElement("a");
-    link.download = "character-editor-malakhovaa.png";
-    link.href = canvas.toDataURL("image/png");
-    link.click();
+    const imageUrl = canvas.toDataURL("image/png");
+
+    downloadImage.src = imageUrl;
+    downloadOverlay.classList.remove("hidden");
+
+    downloadBtn.textContent = "скачать карточку";
+    downloadBtn.disabled = false;
   } catch (error) {
-    alert("Не получилось скачать карточку. Попробуй сделать скриншот.");
+    downloadBtn.textContent = "скачать карточку";
+    downloadBtn.disabled = false;
+    alert("Не получилось подготовить карточку. Попробуй сделать скриншот.");
   }
+}
+
+function closeDownloadPreview() {
+  downloadOverlay.classList.add("hidden");
 }
 
 function shareInTelegram() {
@@ -464,7 +485,6 @@ function resetApp() {
   state.glasses = "ничего";
   state.ears = "ничего";
   state.features = [];
-  state.mask = "ничего";
   state.leftHand = "ничего";
   state.rightHand = "ничего";
   state.traits = [];
@@ -488,7 +508,6 @@ function setDefaultActiveButtons() {
   setActiveButton("hairColor", state.hairColor);
   setActiveButton("glasses", state.glasses);
   setActiveButton("ears", state.ears);
-  setActiveButton("mask", state.mask);
   setActiveButton("leftHand", state.leftHand);
   setActiveButton("rightHand", state.rightHand);
 }
@@ -515,6 +534,18 @@ showCardBtn.addEventListener("click", () => {
 downloadBtn.addEventListener("click", downloadCard);
 shareBtn.addEventListener("click", shareInTelegram);
 restartBtn.addEventListener("click", resetApp);
+
+if (closeDownloadBtn) {
+  closeDownloadBtn.addEventListener("click", closeDownloadPreview);
+}
+
+if (downloadOverlay) {
+  downloadOverlay.addEventListener("click", (event) => {
+    if (event.target === downloadOverlay) {
+      closeDownloadPreview();
+    }
+  });
+}
 
 initTelegram();
 setupTabs();
