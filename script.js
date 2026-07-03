@@ -15,50 +15,50 @@ const state = {
 };
 
 const traits = [
-  "книжный червь",
-  "редфлаг",
-  "безнадежный романтик",
-  "бизнесвуман",
   "авангардист",
-  "black cat energy",
-  "лежебока",
-  "живет в Pinterest",
-  "эмоциональный",
-  "карьерист",
-  "ненавидит звонки",
-  "бунтарь",
-  "матчахолик",
-  "душа компании",
-  "социально неловкий",
-  "ферритин — 10",
-  "перфекционист",
-  "любит приключения",
-  "гринфлаг",
-  "соня",
-  "кокетливый",
-  "на подсчете калорий",
-  "художник",
-  "всегда занята",
+  "безнадежный романтик",
   "безумный",
-  "поп-звезда",
-  "не отвечает на сообщения",
-  "садовод",
-  "golden retriever energy",
   "бережливый",
-  "неряха",
-  "фэшн-икона",
-  "верит в чудеса",
-  "кофехолик",
-  "светский красавец",
-  "эмо",
+  "бизнесвуман",
+  "блэк кэт энерджи",
+  "бунтарь",
   "вегетарианец",
-  "на массанаборе",
-  "шутник",
-  "чистюля",
+  "верит в чудеса",
+  "всегда занята",
+  "гринфлаг",
+  "душа компании",
+  "живет в Pinterest",
   "застенчивый",
+  "карьерист",
+  "книжный червь",
+  "кокетливый",
+  "кофехолик",
   "кулинар",
+  "лежебока",
   "любит детей",
-  "скептик"
+  "любит приключения",
+  "матчахолик",
+  "на массанаборе",
+  "на подсчете калорий",
+  "не отвечает на сообщения",
+  "ненавидит звонки",
+  "неряха",
+  "поп-звезда",
+  "перфекционист",
+  "редфлаг",
+  "садовод",
+  "скептик",
+  "соня",
+  "социально неловкий",
+  "светский красавец",
+  "ферритин — 10",
+  "фэшн-икона",
+  "художник",
+  "чистюля",
+  "шутник",
+  "эмо",
+  "эмоциональный",
+  "голден ретривер энерджи"
 ];
 
 const screens = {
@@ -89,6 +89,7 @@ const finalFaceLayer = document.getElementById("finalFaceLayer");
 const finalEyesLayer = document.getElementById("finalEyesLayer");
 const finalHairLayer = document.getElementById("finalHairLayer");
 const finalDetailsLayer = document.getElementById("finalDetailsLayer");
+
 const finalTraitsList = document.getElementById("finalTraitsList");
 const resultCard = document.getElementById("resultCard");
 
@@ -128,14 +129,18 @@ function updatePortrait() {
   };
 
   const hairColors = {
+    "белые": "#ebe7df",
     "блонд": "#d8bd77",
-    "темные": "#4a342d",
     "русые": "#8a6a4f",
+    "темные": "#4a342d",
     "рыжие": "#aa4d2f",
+    "вишнево-красные": "#6b232f",
     "черные": "#151515"
   };
 
   const eyeColors = {
+    "светло-серые": "#d7dbe2",
+    "серые": "#909aa6",
     "карие": "#5b3422",
     "голубые": "#88aeca",
     "зеленые": "#6f8e67",
@@ -156,6 +161,12 @@ function updatePortrait() {
       top: "36px",
       radius: "46% 46% 28% 28%"
     },
+    "каскад": {
+      width: "210px",
+      height: "190px",
+      top: "36px",
+      radius: "48% 48% 34% 34%"
+    },
     "блоуаут": {
       width: "222px",
       height: "178px",
@@ -168,17 +179,47 @@ function updatePortrait() {
       top: "48px",
       radius: "44% 44% 16% 16%"
     },
-    "очень кудрявые": {
-      width: "230px",
-      height: "190px",
-      top: "30px",
-      radius: "56% 56% 42% 42%"
+    "волнистое каре": {
+      width: "206px",
+      height: "164px",
+      top: "46px",
+      radius: "44% 44% 20% 20%"
     },
     "растрепанный пучок": {
       width: "186px",
       height: "132px",
       top: "58px",
       radius: "48% 48% 26% 26%"
+    },
+    "высокий хвост": {
+      width: "196px",
+      height: "150px",
+      top: "44px",
+      radius: "48% 48% 24% 24%"
+    },
+    "сликбэк": {
+      width: "182px",
+      height: "120px",
+      top: "58px",
+      radius: "52% 52% 20% 20%"
+    },
+    "бигуди": {
+      width: "212px",
+      height: "182px",
+      top: "34px",
+      radius: "54% 54% 36% 36%"
+    },
+    "полотенце": {
+      width: "188px",
+      height: "124px",
+      top: "54px",
+      radius: "44% 44% 22% 22%"
+    },
+    "очень кудрявые": {
+      width: "230px",
+      height: "190px",
+      top: "30px",
+      radius: "56% 56% 42% 42%"
     },
     "очень короткие": {
       width: "172px",
@@ -189,6 +230,16 @@ function updatePortrait() {
   };
 
   const eyeShapes = {
+    "без ресниц": {
+      width: "104px",
+      top: "144px",
+      height: "26px"
+    },
+    "короткие ресницы": {
+      width: "108px",
+      top: "142px",
+      height: "30px"
+    },
     "длинные ресницы": {
       width: "118px",
       top: "142px",
@@ -208,6 +259,16 @@ function updatePortrait() {
       width: "112px",
       top: "146px",
       height: "24px"
+    },
+    "маленькие глаза": {
+      width: "98px",
+      top: "145px",
+      height: "24px"
+    },
+    "большие глаза": {
+      width: "124px",
+      top: "139px",
+      height: "36px"
     }
   };
 
@@ -249,14 +310,23 @@ function updatePortrait() {
 function syncFinalPortrait() {
   finalFaceLayer.style.background = faceLayer.style.background;
   finalFaceLayer.style.borderRadius = faceLayer.style.borderRadius;
-  finalFaceLayer.textContent = faceLayer.textContent;
+  finalFaceLayer.style.width = faceLayer.style.width;
+  finalFaceLayer.style.height = faceLayer.style.height;
+  finalFaceLayer.style.top = faceLayer.style.top;
+  finalFaceLayer.textContent = "";
 
-  finalEyesLayer.style.background = eyesLayer.style.background;
   finalEyesLayer.style.color = eyesLayer.style.color;
-  finalEyesLayer.textContent = eyesLayer.textContent;
+  finalEyesLayer.style.width = eyesLayer.style.width;
+  finalEyesLayer.style.height = eyesLayer.style.height;
+  finalEyesLayer.style.top = eyesLayer.style.top;
+  finalEyesLayer.textContent = "";
 
   finalHairLayer.style.background = hairLayer.style.background;
-  finalHairLayer.textContent = hairLayer.textContent;
+  finalHairLayer.style.width = hairLayer.style.width;
+  finalHairLayer.style.height = hairLayer.style.height;
+  finalHairLayer.style.top = hairLayer.style.top;
+  finalHairLayer.style.borderRadius = hairLayer.style.borderRadius;
+  finalHairLayer.textContent = "";
 
   finalDetailsLayer.textContent = detailsLayer.textContent;
 }
@@ -327,7 +397,6 @@ function renderTraits() {
         button.classList.remove("active");
       } else {
         if (state.traits.length >= 5) return;
-
         state.traits.push(trait);
         button.classList.add("active");
       }
@@ -362,8 +431,9 @@ function renderFinalTraits() {
 async function downloadCard() {
   try {
     const canvas = await html2canvas(resultCard, {
-      backgroundColor: "#fffdf8",
-      scale: 2
+      backgroundColor: null,
+      scale: 3,
+      useCORS: true
     });
 
     const link = document.createElement("a");
@@ -377,12 +447,10 @@ async function downloadCard() {
 
 function shareInTelegram() {
   const text = encodeURIComponent(
-    "я создала персонажа в CHARACTER EDITOR by malakhovaa_"
+    "собери своего персонажа в CHARACTER EDITOR by malakhovaa_"
   );
-
   const url = encodeURIComponent(window.location.href);
   const shareUrl = `https://t.me/share/url?url=${url}&text=${text}`;
-
   window.open(shareUrl, "_blank");
 }
 
@@ -405,18 +473,7 @@ function resetApp() {
     button.classList.remove("active");
   });
 
-  setActiveButton("faceShape", state.faceShape);
-  setActiveButton("skinTone", state.skinTone);
-  setActiveButton("eyeType", state.eyeType);
-  setActiveButton("eyeColor", state.eyeColor);
-  setActiveButton("hairStyle", state.hairStyle);
-  setActiveButton("hairColor", state.hairColor);
-  setActiveButton("glasses", state.glasses);
-  setActiveButton("ears", state.ears);
-  setActiveButton("mask", state.mask);
-  setActiveButton("leftHand", state.leftHand);
-  setActiveButton("rightHand", state.rightHand);
-
+  setDefaultActiveButtons();
   updatePortrait();
   updateTraitsCounter();
   showScreen("editor");
