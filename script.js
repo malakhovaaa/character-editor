@@ -430,9 +430,15 @@ function renderFinalTraits() {
   });
 }
 
+function canvasToBlob(canvas) {
+  return new Promise((resolve) => {
+    canvas.toBlob((blob) => resolve(blob), "image/png", 1);
+  });
+}
+
 async function downloadCard() {
   try {
-    if (!resultCard || !downloadOverlay || !downloadImage) return;
+    if (!resultCard) return;
 
     downloadBtn.textContent = "готовим карточку...";
     downloadBtn.disabled = true;
@@ -448,10 +454,34 @@ async function downloadCard() {
       windowHeight: document.documentElement.offsetHeight
     });
 
+    const blob = await canvasToBlob(canvas);
+    const file = new File([blob], "character-editor-malakhovaa.png", {
+      type: "image/png"
+    });
+
+    if (navigator.canShare && navigator.canShare({ files: [file] })) {
+      await navigator.share({
+        files: [file],
+        title: "CHARACTER EDITOR",
+        text: "мой персонаж в CHARACTER EDITOR by malakhovaa_"
+      });
+
+      downloadBtn.textContent = "скачать карточку";
+      downloadBtn.disabled = false;
+      return;
+    }
+
     const imageUrl = canvas.toDataURL("image/png");
 
-    downloadImage.src = imageUrl;
-    downloadOverlay.classList.remove("hidden");
+    if (downloadImage && downloadOverlay) {
+      downloadImage.src = imageUrl;
+      downloadOverlay.classList.remove("hidden");
+    } else {
+      const newWindow = window.open();
+      if (newWindow) {
+        newWindow.document.write(`<img src="${imageUrl}" style="width:100%;height:auto;" />`);
+      }
+    }
 
     downloadBtn.textContent = "скачать карточку";
     downloadBtn.disabled = false;
@@ -463,7 +493,9 @@ async function downloadCard() {
 }
 
 function closeDownloadPreview() {
-  downloadOverlay.classList.add("hidden");
+  if (downloadOverlay) {
+    downloadOverlay.classList.add("hidden");
+  }
 }
 
 function shareInTelegram() {
