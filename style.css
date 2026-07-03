@@ -507,7 +507,6 @@ h3 {
     align-items: center;
   }
 }
-```
 @media (max-width: 430px) {
   .screen {
     padding: 18px 12px;
@@ -612,6 +611,128 @@ h3 {
 
   .final-portrait {
     max-width: 270px;
+  }
+
+  .created-by {
+    font-size: 10px;
+  }
+}
+@media (max-width: 768px) {
+  .screen {
+    padding: 16px 10px;
+    justify-content: center;
+  }
+
+  .start-card,
+  .congrats-card {
+    width: calc(100% - 44px);
+    max-width: 320px;
+    padding: 34px 18px;
+    border-radius: 26px;
+  }
+
+  .star {
+    width: 36px;
+    height: 36px;
+    margin-bottom: 18px;
+    font-size: 16px;
+  }
+
+  h1 {
+    font-size: 34px;
+    line-height: 0.92;
+    letter-spacing: -1.6px;
+  }
+
+  h2 {
+    font-size: 24px;
+    letter-spacing: -0.8px;
+  }
+
+  .byline {
+    margin-bottom: 26px;
+    font-size: 13px;
+  }
+
+  .subtitle {
+    max-width: 230px;
+    margin-bottom: 26px;
+    font-size: 15px;
+    line-height: 1.35;
+  }
+
+  .main-button,
+  .secondary-button {
+    padding: 14px 16px;
+    font-size: 14px;
+  }
+
+  .portrait {
+    width: min(64vw, 250px);
+    border-radius: 26px;
+  }
+
+  .face-layer {
+    top: 60px;
+    width: 122px;
+    height: 154px;
+  }
+
+  .eyes-layer {
+    top: 120px;
+    width: 96px;
+  }
+
+  .hair-layer {
+    top: 34px;
+    width: 164px;
+    height: 136px;
+  }
+
+  .details-layer {
+    width: 176px;
+    min-height: 44px;
+    bottom: 18px;
+    font-size: 10px;
+    padding: 7px 9px;
+  }
+
+  .screen-header,
+  .tabs,
+  .options-panel,
+  .traits-list,
+  .bottom-button,
+  .result-actions {
+    max-width: 330px;
+  }
+
+  .tabs {
+    gap: 6px;
+  }
+
+  .tab-button {
+    padding: 10px 5px;
+    font-size: 12px;
+  }
+
+  .option-grid button,
+  .trait-button {
+    font-size: 12px;
+  }
+
+  .trait-button {
+    padding: 13px 14px;
+  }
+
+  .result-card {
+    width: calc(100% - 32px);
+    max-width: 330px;
+    padding: 18px;
+    border-radius: 26px;
+  }
+
+  .final-portrait {
+    max-width: 250px;
   }
 
   .created-by {
