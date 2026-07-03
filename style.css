@@ -507,126 +507,16 @@ h3 {
     align-items: center;
   }
 }
-@media (max-width: 430px) {
-  .screen {
-    padding: 18px 12px;
-  }
 
-  .start-card,
-  .congrats-card {
-    max-width: 340px;
-    padding: 38px 20px;
-    border-radius: 28px;
-  }
-
-  h1 {
-    font-size: 36px;
-    letter-spacing: -1.8px;
-  }
-
-  h2 {
-    font-size: 26px;
-    letter-spacing: -0.9px;
-  }
-
-  .subtitle {
-    font-size: 15px;
-    max-width: 240px;
-  }
-
-  .screen-header {
-    max-width: 360px;
-    margin-bottom: 14px;
-  }
-
-  .screen-header p {
-    font-size: 14px;
-  }
-
-  .portrait {
-    width: min(68vw, 270px);
-    border-radius: 28px;
-  }
-
-  .face-layer {
-    top: 66px;
-    width: 132px;
-    height: 164px;
-  }
-
-  .eyes-layer {
-    top: 128px;
-    width: 102px;
-  }
-
-  .hair-layer {
-    top: 38px;
-    width: 176px;
-    height: 146px;
-  }
-
-  .details-layer {
-    width: 188px;
-    min-height: 48px;
-    bottom: 20px;
-    font-size: 10px;
-    padding: 8px 10px;
-  }
-
-  .tabs {
-    max-width: 360px;
-    gap: 6px;
-  }
-
-  .tab-button {
-    padding: 10px 6px;
-    font-size: 12px;
-  }
-
-  .options-panel,
-  .traits-list,
-  .bottom-button,
-  .result-actions {
-    max-width: 360px;
-  }
-
-  .option-grid {
-    gap: 7px;
-  }
-
-  .option-grid button,
-  .trait-button {
-    font-size: 12px;
-  }
-
-  .trait-button {
-    padding: 14px 15px;
-  }
-
-  .result-card {
-    max-width: 360px;
-    padding: 18px;
-    border-radius: 28px;
-  }
-
-  .final-portrait {
-    max-width: 270px;
-  }
-
-  .created-by {
-    font-size: 10px;
-  }
-}
 @media (max-width: 768px) {
   .screen {
-    padding: 16px 10px;
-    justify-content: center;
+    padding: 16px 12px;
   }
 
   .start-card,
   .congrats-card {
-    width: calc(100% - 44px);
-    max-width: 320px;
+    width: calc(100% - 32px);
+    max-width: 340px;
     padding: 34px 18px;
     border-radius: 26px;
   }
@@ -668,33 +558,16 @@ h3 {
   }
 
   .portrait {
-    width: min(64vw, 250px);
-    border-radius: 26px;
-  }
-
-  .face-layer {
-    top: 60px;
-    width: 122px;
-    height: 154px;
-  }
-
-  .eyes-layer {
-    top: 120px;
-    width: 96px;
-  }
-
-  .hair-layer {
-    top: 34px;
-    width: 164px;
-    height: 136px;
+    width: min(70vw, 285px);
+    border-radius: 28px;
   }
 
   .details-layer {
-    width: 176px;
-    min-height: 44px;
-    bottom: 18px;
+    width: 200px;
+    min-height: 50px;
+    bottom: 22px;
     font-size: 10px;
-    padding: 7px 9px;
+    padding: 8px 10px;
   }
 
   .screen-header,
@@ -703,7 +576,7 @@ h3 {
   .traits-list,
   .bottom-button,
   .result-actions {
-    max-width: 330px;
+    max-width: 350px;
   }
 
   .tabs {
@@ -713,6 +586,10 @@ h3 {
   .tab-button {
     padding: 10px 5px;
     font-size: 12px;
+  }
+
+  .option-grid {
+    gap: 7px;
   }
 
   .option-grid button,
@@ -725,17 +602,18 @@ h3 {
   }
 
   .result-card {
-    width: calc(100% - 32px);
-    max-width: 330px;
+    width: calc(100% - 24px);
+    max-width: 350px;
     padding: 18px;
     border-radius: 26px;
   }
 
   .final-portrait {
-    max-width: 250px;
+    max-width: 285px;
   }
 
   .created-by {
     font-size: 10px;
   }
 }
+```
