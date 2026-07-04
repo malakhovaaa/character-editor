@@ -2,10 +2,8 @@
 <html lang="ru">
 <head>
   <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0, viewport-fit=cover"
-  />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+
   <title>CHARACTER EDITOR by malakhovaa_</title>
 
   <link rel="stylesheet" href="style.css" />
@@ -15,477 +13,184 @@
 </head>
 
 <body>
-  <div class="app">
+  <main class="app">
 
-    <!-- START -->
-    <section id="screen-start" class="screen active">
+    <!-- SCREEN 1: START -->
+    <section class="screen screen-start" id="screen1" data-screen>
       <div class="start-card">
-        <div class="star">★</div>
-        <h1>CHARACTER<br />EDITOR</h1>
-        <p class="byline">by malakhovaa_</p>
-        <p class="subtitle">взрослая версия редактора персонажа</p>
-        <button id="startBtn" class="main-button">создать персонажа</button>
+        <p class="mini-label">by malakhovaa_</p>
+        <h1>
+          CHARACTER<br />
+          EDITOR
+        </h1>
+        <p class="start-subtitle">взрослая версия редактора персонажа</p>
+
+        <button class="main-button" data-go="screen2">
+          создать персонажа
+        </button>
       </div>
     </section>
 
-    <!-- EDITOR -->
-    <section id="screen-editor" class="screen">
+    <!-- SCREEN 2: EDITOR -->
+    <section class="screen screen-editor" id="screen2" data-screen>
       <div class="screen-header">
         <h2>создание персонажа</h2>
-        <p>выбери черты лица, волосы и добавь деталей</p>
+        <p>выбери лицо, глаза и цветовые детали</p>
       </div>
 
       <div class="portrait-wrap">
-        <div class="portrait">
-          <div id="hairLayer" class="layer hair-layer"></div>
-          <div id="faceLayer" class="layer face-layer"></div>
-          <div id="eyesLayer" class="layer eyes-layer"></div>
-          <div id="detailsLayer" class="layer details-layer">детали</div>
+        <div class="portrait" id="portrait">
+          <div class="layer face-layer" id="faceLayer"></div>
+          <div class="layer hair-layer" id="hairLayer"></div>
+          <div class="layer eyes-layer" id="eyesLayer"></div>
+          <div class="layer details-layer" id="detailsLayer"></div>
         </div>
       </div>
 
-      <div class="tabs">
-        <button class="tab-button active" data-tab="face">лицо</button>
-        <button class="tab-button" data-tab="eyes">глаза</button>
-        <button class="tab-button" data-tab="hair">волосы</button>
-        <button class="tab-button" data-tab="details">детали</button>
-      </div>
+      <div class="editor-panel">
+        <div class="tabs">
+          <button class="tab-button is-active" type="button" data-tab="face">лицо</button>
+          <button class="tab-button" type="button" data-tab="eyes">глаза</button>
+          <button class="tab-button" type="button" data-tab="hair">волосы</button>
+          <button class="tab-button" type="button" data-tab="details">детали</button>
+        </div>
 
-      <div class="options-panel">
-
-        <!-- FACE -->
-        <div class="tab-content active" id="tab-face">
-          <h3>форма лица</h3>
-          <div class="option-grid visual-grid" data-group="faceShape">
-            <button data-value="круглое">
-              <span class="mini-face face-round"></span>
-              <span>круглое</span>
-            </button>
-            <button data-value="острый подбородок">
-              <span class="mini-face face-pointed"></span>
-              <span>острый подбородок</span>
-            </button>
-            <button data-value="квадратное со скулами">
-              <span class="mini-face face-square"></span>
-              <span>квадратное</span>
-            </button>
-            <button data-value="овальное">
-              <span class="mini-face face-oval"></span>
-              <span>овальное</span>
-            </button>
+        <div class="tab-content is-active" id="tab-face">
+          <div class="control-group">
+            <p class="control-title">форма лица</p>
+            <div class="options-row" id="faceShapeOptions"></div>
           </div>
 
-          <h3>цвет кожи</h3>
-          <div class="option-grid swatch-grid" data-group="skinTone">
-            <button data-value="очень светлый">
-              <span class="swatch skin-very-light"></span>
-              <span>очень светлый</span>
-            </button>
-            <button data-value="светлый">
-              <span class="swatch skin-light"></span>
-              <span>светлый</span>
-            </button>
-            <button data-value="средний">
-              <span class="swatch skin-medium"></span>
-              <span>средний</span>
-            </button>
-            <button data-value="темный">
-              <span class="swatch skin-dark"></span>
-              <span>темный</span>
-            </button>
+          <div class="control-group">
+            <p class="control-title">оттенок кожи</p>
+            <div class="color-row" id="skinToneOptions"></div>
           </div>
         </div>
 
-        <!-- EYES -->
         <div class="tab-content" id="tab-eyes">
-          <h3>тип глаз</h3>
-          <div class="option-grid visual-grid" data-group="eyeType">
-            <button data-value="без ресниц">
-              <span class="mini-eye eye-basic"></span>
-              <span>без ресниц</span>
-            </button>
-            <button data-value="короткие ресницы">
-              <span class="mini-eye eye-short-lashes"></span>
-              <span>короткие ресницы</span>
-            </button>
-            <button data-value="длинные ресницы">
-              <span class="mini-eye eye-long-lashes"></span>
-              <span>длинные ресницы</span>
-            </button>
-            <button data-value="стрелки">
-              <span class="mini-eye eye-liner"></span>
-              <span>стрелки</span>
-            </button>
-            <button data-value="smoky eyes">
-              <span class="mini-eye eye-smoky"></span>
-              <span>smoky eyes</span>
-            </button>
-            <button data-value="узкие глаза">
-              <span class="mini-eye eye-narrow"></span>
-              <span>узкие глаза</span>
-            </button>
-            <button data-value="маленькие глаза">
-              <span class="mini-eye eye-small"></span>
-              <span>маленькие глаза</span>
-            </button>
-            <button data-value="большие глаза">
-              <span class="mini-eye eye-big"></span>
-              <span>большие глаза</span>
-            </button>
+          <div class="control-group">
+            <p class="control-title">форма глаз</p>
+            <div class="options-row" id="eyeShapeOptions"></div>
           </div>
 
-          <h3>цвет глаз</h3>
-          <div class="option-grid swatch-grid" data-group="eyeColor">
-            <button data-value="светло-серые">
-              <span class="swatch eye-light-gray"></span>
-              <span>светло-серые</span>
-            </button>
-            <button data-value="серые">
-              <span class="swatch eye-gray"></span>
-              <span>серые</span>
-            </button>
-            <button data-value="карие">
-              <span class="swatch eye-brown"></span>
-              <span>карие</span>
-            </button>
-            <button data-value="голубые">
-              <span class="swatch eye-blue"></span>
-              <span>голубые</span>
-            </button>
-            <button data-value="зеленые">
-              <span class="swatch eye-green"></span>
-              <span>зеленые</span>
-            </button>
-            <button data-value="почти черные">
-              <span class="swatch eye-black"></span>
-              <span>почти черные</span>
-            </button>
+          <div class="control-group">
+            <p class="control-title">цвет глаз</p>
+            <div class="color-row" id="eyeColorOptions"></div>
           </div>
         </div>
 
-        <!-- HAIR -->
         <div class="tab-content" id="tab-hair">
-          <h3>прическа</h3>
-          <div class="option-grid visual-grid" data-group="hairStyle">
-            <button data-value="прямые">
-              <span class="mini-hair hair-straight"></span>
-              <span>прямые</span>
-            </button>
-            <button data-value="каскад">
-              <span class="mini-hair hair-cascade"></span>
-              <span>каскад</span>
-            </button>
-            <button data-value="блоуаут">
-              <span class="mini-hair hair-blowout"></span>
-              <span>блоуаут</span>
-            </button>
-            <button data-value="каре">
-              <span class="mini-hair hair-bob"></span>
-              <span>каре</span>
-            </button>
-            <button data-value="волнистое каре">
-              <span class="mini-hair hair-wavy-bob"></span>
-              <span>волнистое каре</span>
-            </button>
-            <button data-value="растрепанный пучок">
-              <span class="mini-hair hair-bun"></span>
-              <span>пучок</span>
-            </button>
-            <button data-value="высокий хвост">
-              <span class="mini-hair hair-ponytail"></span>
-              <span>высокий хвост</span>
-            </button>
-            <button data-value="сликбэк">
-              <span class="mini-hair hair-slick"></span>
-              <span>сликбэк</span>
-            </button>
-            <button data-value="бигуди">
-              <span class="mini-hair hair-rollers"></span>
-              <span>бигуди</span>
-            </button>
-            <button data-value="полотенце">
-              <span class="mini-hair hair-towel"></span>
-              <span>полотенце</span>
-            </button>
-            <button data-value="очень кудрявые">
-              <span class="mini-hair hair-curly"></span>
-              <span>кудрявые</span>
-            </button>
-            <button data-value="очень короткие">
-              <span class="mini-hair hair-short"></span>
-              <span>короткие</span>
-            </button>
-          </div>
-
-          <h3>цвет волос</h3>
-          <div class="option-grid swatch-grid" data-group="hairColor">
-            <button data-value="белые">
-              <span class="swatch hair-white"></span>
-              <span>белые</span>
-            </button>
-            <button data-value="блонд">
-              <span class="swatch hair-blonde"></span>
-              <span>блонд</span>
-            </button>
-            <button data-value="русые">
-              <span class="swatch hair-light-brown"></span>
-              <span>русые</span>
-            </button>
-            <button data-value="темные">
-              <span class="swatch hair-dark"></span>
-              <span>темные</span>
-            </button>
-            <button data-value="рыжие">
-              <span class="swatch hair-red"></span>
-              <span>рыжие</span>
-            </button>
-            <button data-value="вишнево-красные">
-              <span class="swatch hair-cherry"></span>
-              <span>вишневые</span>
-            </button>
-            <button data-value="черные">
-              <span class="swatch hair-black"></span>
-              <span>черные</span>
-            </button>
+          <div class="empty-state">
+            волосы подключим следующим этапом
           </div>
         </div>
 
-        <!-- DETAILS -->
         <div class="tab-content" id="tab-details">
-          <h3>очки и маска</h3>
-          <div class="option-grid visual-grid" data-group="glasses">
-            <button data-value="ничего">
-              <span class="mini-detail detail-none"></span>
-              <span>ничего</span>
-            </button>
-            <button data-value="белая оправа">
-              <span class="mini-detail detail-white-glasses"></span>
-              <span>белая оправа</span>
-            </button>
-            <button data-value="черная оправа">
-              <span class="mini-detail detail-black-glasses"></span>
-              <span>черная оправа</span>
-            </button>
-            <button data-value="солнцезащитные очки">
-              <span class="mini-detail detail-sun-glasses"></span>
-              <span>солнцезащитные</span>
-            </button>
-            <button data-value="тканевая маска">
-              <span class="mini-detail detail-mask"></span>
-              <span>тканевая маска</span>
-            </button>
-          </div>
-
-          <h3>уши</h3>
-          <div class="option-grid visual-grid" data-group="ears">
-            <button data-value="ничего">
-              <span class="mini-detail detail-none"></span>
-              <span>ничего</span>
-            </button>
-            <button data-value="пусеты серебро">
-              <span class="mini-detail detail-studs-silver"></span>
-              <span>пусеты серебро</span>
-            </button>
-            <button data-value="пусеты золото">
-              <span class="mini-detail detail-studs-gold"></span>
-              <span>пусеты золото</span>
-            </button>
-            <button data-value="кольца серебро">
-              <span class="mini-detail detail-hoops-silver"></span>
-              <span>кольца серебро</span>
-            </button>
-            <button data-value="кольца золото">
-              <span class="mini-detail detail-hoops-gold"></span>
-              <span>кольца золото</span>
-            </button>
-            <button data-value="проводные наушники">
-              <span class="mini-detail detail-wired"></span>
-              <span>проводные</span>
-            </button>
-            <button data-value="большие наушники">
-              <span class="mini-detail detail-headphones"></span>
-              <span>большие</span>
-            </button>
-          </div>
-
-          <h3>изюминки</h3>
-          <div class="option-grid visual-grid multi" data-group="features">
-            <button data-value="родинка у губы">
-              <span class="mini-detail detail-mole-lip"></span>
-              <span>родинка у губы</span>
-            </button>
-            <button data-value="родинка у глаза">
-              <span class="mini-detail detail-mole-eye"></span>
-              <span>родинка у глаза</span>
-            </button>
-            <button data-value="веснушки">
-              <span class="mini-detail detail-freckles"></span>
-              <span>веснушки</span>
-            </button>
-          </div>
-
-          <h3>левая рука</h3>
-          <div class="option-grid visual-grid" data-group="leftHand">
-            <button data-value="ничего">
-              <span class="mini-detail detail-none"></span>
-              <span>ничего</span>
-            </button>
-            <button data-value="блеск для губ">
-              <span class="mini-detail detail-gloss"></span>
-              <span>блеск</span>
-            </button>
-            <button data-value="телефон">
-              <span class="mini-detail detail-phone"></span>
-              <span>телефон</span>
-            </button>
-            <button data-value="камера">
-              <span class="mini-detail detail-camera"></span>
-              <span>камера</span>
-            </button>
-            <button data-value="гантели">
-              <span class="mini-detail detail-dumbbell"></span>
-              <span>гантели</span>
-            </button>
-            <button data-value="стаканчик кофе">
-              <span class="mini-detail detail-coffee"></span>
-              <span>кофе</span>
-            </button>
-            <button data-value="цветок пиона">
-              <span class="mini-detail detail-flower"></span>
-              <span>пион</span>
-            </button>
-          </div>
-
-          <h3>правая рука</h3>
-          <div class="option-grid visual-grid" data-group="rightHand">
-            <button data-value="ничего">
-              <span class="mini-detail detail-none"></span>
-              <span>ничего</span>
-            </button>
-            <button data-value="блеск для губ">
-              <span class="mini-detail detail-gloss"></span>
-              <span>блеск</span>
-            </button>
-            <button data-value="телефон">
-              <span class="mini-detail detail-phone"></span>
-              <span>телефон</span>
-            </button>
-            <button data-value="камера">
-              <span class="mini-detail detail-camera"></span>
-              <span>камера</span>
-            </button>
-            <button data-value="гантели">
-              <span class="mini-detail detail-dumbbell"></span>
-              <span>гантели</span>
-            </button>
-            <button data-value="стаканчик кофе">
-              <span class="mini-detail detail-coffee"></span>
-              <span>кофе</span>
-            </button>
-            <button data-value="цветок пиона">
-              <span class="mini-detail detail-flower"></span>
-              <span>пион</span>
-            </button>
+          <div class="empty-state">
+            детали подключим после волос
           </div>
         </div>
       </div>
 
-      <button id="toTraitsBtn" class="main-button bottom-button">
+      <button class="main-button bottom-button" data-go="screen3">
         выбрать черты характера
       </button>
     </section>
 
-    <!-- TRAITS -->
-    <section id="screen-traits" class="screen traits-screen">
-      <div class="screen-header traits-header">
+    <!-- SCREEN 3: TRAITS -->
+    <section class="screen screen-traits" id="screen3" data-screen>
+      <div class="screen-header">
         <h2>черты характера</h2>
         <p>выбери 5 черт, которые делают персонажа именно твоим</p>
-        <p class="counter-label">выбери 5 черт</p>
-        <p id="traitsCounter" class="counter">0/5</p>
       </div>
 
-      <div id="traitsList" class="traits-list"></div>
+      <div class="traits-top">
+        <span>выбрано</span>
+        <strong id="traitsCounter">0/5</strong>
+      </div>
 
-      <button id="finishTraitsBtn" class="main-button disabled bottom-button">
+      <div class="traits-scroll" id="traitsOptions"></div>
+
+      <button class="main-button bottom-button" id="createCardBtn">
         это я!
       </button>
     </section>
 
-    <!-- CONGRATS -->
-    <section id="screen-congrats" class="screen">
+    <!-- SCREEN 4: CONGRATS -->
+    <section class="screen screen-congrats" id="screen4" data-screen>
       <div class="congrats-card">
-        <div class="star">★</div>
         <h2>поздравляю с созданием персонажа!</h2>
         <p>
-          ты всегда можешь вернуться сюда и снова кастомизировать своего персонажа
+          ты всегда можешь вернуться сюда<br />
+          и снова кастомизировать своего персонажа
         </p>
-        <button id="showCardBtn" class="main-button">посмотреть карточку</button>
+
+        <button class="main-button" data-go="screen5">
+          посмотреть карточку
+        </button>
       </div>
     </section>
 
-    <!-- RESULT -->
-    <section id="screen-result" class="screen">
-      <div id="resultCard" class="result-card">
-        <p class="result-topline">это я!</p>
+    <!-- SCREEN 5: RESULT -->
+    <section class="screen screen-result" id="screen5" data-screen>
+      <div class="badge-card" id="finalCard">
+        <div class="badge-lanyard"></div>
 
-        <div class="badge-hanger" aria-hidden="true">
-          <span class="strap strap-left"></span>
-          <span class="strap strap-right"></span>
-        </div>
+        <div class="badge-title">это я!</div>
 
-        <div class="sleeve">
-          <div class="badge-card">
-            <div class="badge-ring ring-left"></div>
-            <div class="badge-ring ring-right"></div>
+        <div class="plastic-holder">
+          <div class="holder-holes">
+            <span></span>
+            <span></span>
+          </div>
 
-            <div class="badge-inner">
-              <div class="badge-star">★</div>
-
-              <div class="badge-head">
-                <p class="badge-kicker">CHARACTER EDITOR</p>
-                <p class="badge-kicker-sub">by malakhovaa_</p>
+          <div class="paper-pass">
+            <div class="pass-header">
+              <div>
+                <p class="pass-kicker">CHARACTER EDITOR</p>
+                <p class="pass-byline">by malakhovaa_</p>
               </div>
 
-              <div class="badge-avatar-shell">
-                <div class="portrait final-portrait">
-                  <div id="finalHairLayer" class="layer hair-layer"></div>
-                  <div id="finalFaceLayer" class="layer face-layer"></div>
-                  <div id="finalEyesLayer" class="layer eyes-layer"></div>
-                  <div id="finalDetailsLayer" class="layer details-layer">детали</div>
-                </div>
-              </div>
-
-              <div class="badge-traits-block">
-                <p class="badge-section-title">мои черты</p>
-                <ul id="finalTraitsList" class="badge-traits-list"></ul>
-              </div>
-
-              <p class="badge-footer">
-                created in CHARACTER EDITOR by malakhovaa_
-              </p>
+              <div class="hand-star">★</div>
             </div>
+
+            <div class="badge-avatar-frame">
+              <div class="portrait final-portrait" id="finalPortrait">
+                <div class="layer face-layer" id="finalFaceLayer"></div>
+                <div class="layer hair-layer" id="finalHairLayer"></div>
+                <div class="layer eyes-layer" id="finalEyesLayer"></div>
+                <div class="layer details-layer" id="finalDetailsLayer"></div>
+              </div>
+            </div>
+
+            <div class="badge-traits">
+              <p class="traits-title">мои черты</p>
+              <div id="finalTraitsList"></div>
+            </div>
+
+            <p class="pass-footer">
+              created in CHARACTER EDITOR by malakhovaa_
+            </p>
           </div>
         </div>
       </div>
 
       <div class="result-actions">
-        <button id="downloadBtn" class="main-button">скачать карточку</button>
-        <button id="shareBtn" class="secondary-button">поделиться игрой</button>
-        <button id="restartBtn" class="secondary-button">хочу нового персонажа</button>
+        <button class="main-button" id="downloadCardBtn">
+          скачать карточку
+        </button>
+
+        <button class="secondary-button" id="shareTelegramBtn">
+          поделиться в телеграм
+        </button>
+
+        <button class="secondary-button" id="newCharacterBtn">
+          хочу нового персонажа
+        </button>
       </div>
     </section>
 
-    <!-- DOWNLOAD PREVIEW -->
-    <div id="downloadOverlay" class="download-overlay hidden">
-      <div class="download-modal">
-        <button id="closeDownloadBtn" class="download-close">×</button>
-        <h2>карточка готова</h2>
-        <p>зажми картинку и выбери «сохранить»</p>
-        <img id="downloadImage" alt="character card" />
-      </div>
-    </div>
-
-  </div>
+  </main>
 
   <script src="script.js"></script>
 </body>
