@@ -656,3 +656,18 @@ button {
     min-height: 68px;
   }
 }
+/* =========================
+   EYES POSITION FIX
+   ========================= */
+
+/* Глаза в редакторе */
+#eyesLayer {
+  transform: translateY(-58px) scale(0.68);
+  transform-origin: center center;
+}
+
+/* Глаза на финальном бейдже */
+#finalEyesLayer {
+  transform: translateY(-46px) scale(0.68);
+  transform-origin: center center;
+}
