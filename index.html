@@ -16,16 +16,20 @@
   <main class="app">
 
     <!-- SCREEN 1: START -->
-    <section class="screen screen-start" id="screen1" data-screen>
+    <section class="screen screen-start is-active" id="screen1" data-screen>
       <div class="start-card">
         <p class="mini-label">by malakhovaa_</p>
+
         <h1>
           CHARACTER<br />
           EDITOR
         </h1>
-        <p class="start-subtitle">взрослая версия редактора персонажа</p>
 
-        <button class="main-button" data-go="screen2">
+        <p class="start-subtitle">
+          взрослая версия редактора персонажа
+        </p>
+
+        <button class="main-button" type="button" data-go="screen2">
           создать персонажа
         </button>
       </div>
@@ -92,7 +96,7 @@
         </div>
       </div>
 
-      <button class="main-button bottom-button" data-go="screen3">
+      <button class="main-button bottom-button" type="button" data-go="screen3">
         выбрать черты характера
       </button>
     </section>
@@ -111,7 +115,7 @@
 
       <div class="traits-scroll" id="traitsOptions"></div>
 
-      <button class="main-button bottom-button" id="createCardBtn">
+      <button class="main-button bottom-button" type="button" id="createCardBtn">
         это я!
       </button>
     </section>
@@ -120,12 +124,13 @@
     <section class="screen screen-congrats" id="screen4" data-screen>
       <div class="congrats-card">
         <h2>поздравляю с созданием персонажа!</h2>
+
         <p>
           ты всегда можешь вернуться сюда<br />
           и снова кастомизировать своего персонажа
         </p>
 
-        <button class="main-button" data-go="screen5">
+        <button class="main-button" type="button" data-go="screen5">
           посмотреть карточку
         </button>
       </div>
@@ -176,15 +181,15 @@
       </div>
 
       <div class="result-actions">
-        <button class="main-button" id="downloadCardBtn">
+        <button class="main-button" type="button" id="downloadCardBtn">
           скачать карточку
         </button>
 
-        <button class="secondary-button" id="shareTelegramBtn">
+        <button class="secondary-button" type="button" id="shareTelegramBtn">
           поделиться в телеграм
         </button>
 
-        <button class="secondary-button" id="newCharacterBtn">
+        <button class="secondary-button" type="button" id="newCharacterBtn">
           хочу нового персонажа
         </button>
       </div>
