@@ -662,12 +662,12 @@ button {
 
 /* Глаза в редакторе */
 #eyesLayer {
-  transform: translateY(-50px) scale(0.56);
+  transform: translateY(-50px) scale(0.52);
   transform-origin: center center;
 }
 
 /* Глаза на финальном бейдже */
 #finalEyesLayer {
-  transform: translateY(-40px) scale(0.56);
+  transform: translateY(-40px) scale(0.52);
   transform-origin: center center;
 }
