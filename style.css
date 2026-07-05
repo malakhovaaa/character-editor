@@ -194,6 +194,18 @@ button {
   z-index: 4;
 }
 
+/* EYES POSITION FIX */
+
+#eyesLayer {
+  transform: translateY(-50px) scale(0.52);
+  transform-origin: center center;
+}
+
+#finalEyesLayer {
+  transform: translateY(-40px) scale(0.52);
+  transform-origin: center center;
+}
+
 /* EDITOR */
 
 .editor-panel {
@@ -655,19 +667,4 @@ button {
     width: 68px;
     min-height: 68px;
   }
-}
-/* =========================
-   EYES POSITION FIX
-   ========================= */
-
-/* Глаза в редакторе */
-#eyesLayer {
-  transform: translateY(-50px) scale(0.52);
-  transform-origin: center center;
-}
-
-/* Глаза на финальном бейдже */
-#finalEyesLayer {
-  transform: translateY(-40px) scale(0.52);
-  transform-origin: center center;
 }
