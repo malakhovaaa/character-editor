@@ -10,7 +10,10 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   const FACE_SHAPES = [
-    { id: "oval", label: "овал" }
+    { id: "oval", label: "овал" },
+    { id: "round", label: "круглое" },
+    { id: "sharp_chin", label: "острый подбородок" },
+    { id: "square_cheekbones", label: "квадратное со скулами" }
   ];
 
   const SKIN_TONES = [
@@ -168,15 +171,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!faceShape) return "";
 
-    if (faceShape === "oval" && !skinTone) {
-      return "assets/avatar/base/base_skin_white_oval.png";
+    if (!skinTone) {
+      return `assets/avatar/base/base_skin_white_${faceShape}.png`;
     }
 
-    if (faceShape === "oval" && skinTone) {
-      return `assets/avatar/base/base_skin_${skinTone}_oval.png`;
-    }
-
-    return "";
+    return `assets/avatar/base/base_skin_${skinTone}_${faceShape}.png`;
   }
 
   function getEyesAssetPath() {
@@ -231,6 +230,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       container.appendChild(button);
     });
+
+    updateSelectedClass("faceShapeOptions", state.avatar.faceShape);
   }
 
   function renderSkinToneOptions() {
@@ -266,6 +267,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       container.appendChild(button);
     });
+
+    updateSelectedClass("skinToneOptions", state.avatar.skinTone);
   }
 
   function renderEyeShapeOptions() {
@@ -290,6 +293,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       container.appendChild(button);
     });
+
+    updateSelectedClass("eyeShapeOptions", state.avatar.eyeShape);
   }
 
   function renderEyeColorOptions() {
@@ -325,6 +330,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
       container.appendChild(button);
     });
+
+    updateSelectedClass("eyeColorOptions", state.avatar.eyeColor);
   }
 
   function renderTraitOptions() {
