@@ -120,31 +120,29 @@ function initTelegram() {
   }
 }
 
+function safeAddListener(elementId, eventName, handler) {
+  const element = document.getElementById(elementId);
+  if (!element) return;
+  element.addEventListener(eventName, handler);
+}
+
 function initNavigation() {
-  const startButton = document.getElementById("startButton");
-  const toTraitsButton = document.getElementById("toTraitsButton");
-  const toCongratsButton = document.getElementById("toCongratsButton");
-  const toResultButton = document.getElementById("toResultButton");
-  const restartButton = document.getElementById("restartButton");
-  const downloadButton = document.getElementById("downloadButton");
-  const shareButton = document.getElementById("shareButton");
+  safeAddListener("startButton", "click", () => showScreen("screen2"));
+  safeAddListener("toTraitsButton", "click", () => showScreen("screen3"));
+  safeAddListener("toCongratsButton", "click", () => showScreen("screen4"));
 
-  startButton.addEventListener("click", () => showScreen("screen2"));
-  toTraitsButton.addEventListener("click", () => showScreen("screen3"));
-  toCongratsButton.addEventListener("click", () => showScreen("screen4"));
-
-  toResultButton.addEventListener("click", () => {
+  safeAddListener("toResultButton", "click", () => {
     updateFinalCard();
     showScreen("screen5");
   });
 
-  restartButton.addEventListener("click", () => {
+  safeAddListener("restartButton", "click", () => {
     resetCharacter();
     showScreen("screen2");
   });
 
-  downloadButton.addEventListener("click", downloadBadge);
-  shareButton.addEventListener("click", shareBadge);
+  safeAddListener("downloadButton", "click", downloadBadge);
+  safeAddListener("shareButton", "click", shareBadge);
 }
 
 function showScreen(screenId) {
@@ -154,7 +152,7 @@ function showScreen(screenId) {
     screen.classList.toggle("is-active", screen.id === screenId);
   });
 
-  window.scrollTo({ top: 0, behavior: "instant" });
+  window.scrollTo({ top: 0, behavior: "auto" });
 }
 
 function initTabs() {
@@ -172,13 +170,15 @@ function initTabs() {
         content.classList.toggle("is-active", content.dataset.tabContent === targetTab);
       });
 
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      window.scrollTo({ top: 0, behavior: "auto" });
     });
   });
 }
 
 function renderFaceShapeOptions() {
   const container = document.getElementById("faceShapeOptions");
+  if (!container) return;
+
   container.innerHTML = "";
 
   FACE_SHAPES.forEach((shape) => {
@@ -201,6 +201,8 @@ function renderFaceShapeOptions() {
 
 function renderSkinToneOptions() {
   const container = document.getElementById("skinToneOptions");
+  if (!container) return;
+
   container.innerHTML = "";
 
   SKIN_TONES.forEach((tone) => {
@@ -221,6 +223,8 @@ function renderSkinToneOptions() {
 
 function renderEyeShapeOptions() {
   const container = document.getElementById("eyeShapeOptions");
+  if (!container) return;
+
   container.innerHTML = "";
 
   EYE_SHAPES.forEach((shape) => {
@@ -243,6 +247,8 @@ function renderEyeShapeOptions() {
 
 function renderEyeColorOptions() {
   const container = document.getElementById("eyeColorOptions");
+  if (!container) return;
+
   container.innerHTML = "";
 
   EYE_COLORS.forEach((color) => {
@@ -263,6 +269,8 @@ function renderEyeColorOptions() {
 
 function renderHairStyleOptions() {
   const container = document.getElementById("hairStyleOptions");
+  if (!container) return;
+
   container.innerHTML = "";
 
   HAIR_STYLES.forEach((style) => {
@@ -288,6 +296,8 @@ function renderHairStyleOptions() {
 
 function renderHairColorOptions() {
   const container = document.getElementById("hairColorOptions");
+  if (!container) return;
+
   container.innerHTML = "";
 
   HAIR_COLORS.forEach((color) => {
@@ -314,6 +324,8 @@ function renderHairColorOptions() {
 
 function renderTraits() {
   const container = document.getElementById("traitsGrid");
+  if (!container) return;
+
   container.innerHTML = "";
 
   TRAITS.forEach((trait) => {
@@ -384,20 +396,32 @@ function updateTraitsState() {
     button.classList.toggle("is-active", state.selectedTraits.includes(trait));
   });
 
-  counter.textContent = `${state.selectedTraits.length}/5`;
-  toCongratsButton.disabled = state.selectedTraits.length !== 5;
+  if (counter) {
+    counter.textContent = `${state.selectedTraits.length}/5`;
+  }
+
+  if (toCongratsButton) {
+    toCongratsButton.disabled = state.selectedTraits.length !== 5;
+  }
 }
 
 function getFaceImagePath() {
   return `${ASSET_BASE_PATH}/base_skin_${state.skinTone}_${state.faceShape}.png`;
 }
 
+/*
+  Глаза:
+  1. сначала старый рабочий формат:
+     eyes_{shape}_{color}.png
+  2. потом новый формат:
+     eyes_{color}_{shape}_.png
+*/
 function getPrimaryEyesImagePath() {
-  return `${ASSET_EYES_PATH}/eyes_${state.eyeColor}_${state.eyeShape}_.png`;
+  return `${ASSET_EYES_PATH}/eyes_${state.eyeShape}_${state.eyeColor}.png`;
 }
 
 function getFallbackEyesImagePath() {
-  return `${ASSET_EYES_PATH}/eyes_${state.eyeShape}_${state.eyeColor}.png`;
+  return `${ASSET_EYES_PATH}/eyes_${state.eyeColor}_${state.eyeShape}_.png`;
 }
 
 function getHairBackImagePath() {
@@ -454,6 +478,8 @@ function updateFinalCard() {
   setBackground("finalDetailsLayer", "");
 
   const finalTraitsList = document.getElementById("finalTraitsList");
+  if (!finalTraitsList) return;
+
   finalTraitsList.innerHTML = "";
 
   state.selectedTraits.forEach((trait) => {
@@ -465,10 +491,7 @@ function updateFinalCard() {
 
 function applyEyeStyleClass(elementId, eyeShape) {
   const element = document.getElementById(elementId);
-
-  if (!element) {
-    return;
-  }
+  if (!element) return;
 
   element.classList.remove(
     "eyes-style-no_lashes",
@@ -484,10 +507,7 @@ function applyEyeStyleClass(elementId, eyeShape) {
 
 function applyHairStyleClass(elementId, hairStyle) {
   const element = document.getElementById(elementId);
-
-  if (!element) {
-    return;
-  }
+  if (!element) return;
 
   element.classList.remove(
     "hair-style-straight",
@@ -501,10 +521,7 @@ function applyHairStyleClass(elementId, hairStyle) {
 
 function setBackground(elementId, imagePath) {
   const element = document.getElementById(elementId);
-
-  if (!element) {
-    return;
-  }
+  if (!element) return;
 
   if (!imagePath) {
     element.style.backgroundImage = "";
@@ -516,10 +533,7 @@ function setBackground(elementId, imagePath) {
 
 function setBackgroundWithFallback(elementId, primaryPath, fallbackPath) {
   const element = document.getElementById(elementId);
-
-  if (!element) {
-    return;
-  }
+  if (!element) return;
 
   const image = new Image();
 
