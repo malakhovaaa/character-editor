@@ -1,8 +1,8 @@
 const ASSET_BASE_PATH = "assets/avatar/base";
 const ASSET_EYES_PATH = "assets/avatar/eyes";
 
-const TECHNICAL_SKIN_TONE = "white";
-const TECHNICAL_EYE_COLOR = "white";
+const DEFAULT_SKIN_TONE = "very_light";
+const DEFAULT_EYE_COLOR = "light_gray";
 
 const FACE_SHAPES = [
   { id: "oval", label: "овал" },
@@ -12,11 +12,11 @@ const FACE_SHAPES = [
 ];
 
 const SKIN_TONES = [
-  { id: "very_light", label: "очень светлый" },
-  { id: "light", label: "светлый" },
-  { id: "medium", label: "средний" },
-  { id: "tan", label: "загорелый" },
-  { id: "dark", label: "темный" }
+  { id: "very_light", label: "очень светлый", swatch: "#f6d8c8" },
+  { id: "light", label: "светлый", swatch: "#e9bd9f" },
+  { id: "medium", label: "средний", swatch: "#c98f65" },
+  { id: "tan", label: "загорелый", swatch: "#a96843" },
+  { id: "dark", label: "темный", swatch: "#633a2a" }
 ];
 
 const EYE_SHAPES = [
@@ -24,18 +24,17 @@ const EYE_SHAPES = [
   { id: "short_lashes", label: "короткие ресницы" },
   { id: "long_lashes", label: "длинные ресницы" },
   { id: "winged_liner", label: "стрелки" },
-  { id: "smokey", label: "Смоки" },
-  { id: "narrow", label: "миндалевидные" },
+  { id: "smokey", label: "смоки" },
   { id: "small_waterline", label: "подведенные" }
 ];
 
 const EYE_COLORS = [
-  { id: "light_gray", label: "светло-серые" },
-  { id: "brown", label: "карие" },
-  { id: "gray", label: "серые" },
-  { id: "blue", label: "голубые" },
-  { id: "green", label: "зеленые" },
-  { id: "almost_black", label: "почти черные" }
+  { id: "light_gray", label: "светло-серые", swatch: "#dfe4e4" },
+  { id: "brown", label: "карие", swatch: "#6b3f26" },
+  { id: "gray", label: "серые", swatch: "#8c9292" },
+  { id: "blue", label: "голубые", swatch: "#7fb2d9" },
+  { id: "green", label: "зеленые", swatch: "#6e9a72" },
+  { id: "almost_black", label: "почти черные", swatch: "#171412" }
 ];
 
 const TRAITS = [
@@ -68,20 +67,10 @@ const TRAITS = [
 
 const state = {
   faceShape: "oval",
-
-  /*
-    null = технический белый вариант:
-    base_skin_white_{shape}.png
-  */
-  skinTone: null,
+  skinTone: DEFAULT_SKIN_TONE,
 
   eyeShape: "no_lashes",
-
-  /*
-    null = технический белый вариант:
-    eyes_{shape}_white.png
-  */
-  eyeColor: null,
+  eyeColor: DEFAULT_EYE_COLOR,
 
   selectedTraits: []
 };
@@ -177,10 +166,10 @@ function renderFaceShapeOptions() {
         state.faceShape = shape.id;
 
         /*
-          При выборе любой формы лица сначала показываем белую версию этой формы:
-          base_skin_white_{shape}.png
+          При клике на любую форму лица сначала показываем:
+          base_skin_very_light_{shape}.png
         */
-        state.skinTone = null;
+        state.skinTone = DEFAULT_SKIN_TONE;
 
         renderFaceShapeOptions();
         renderSkinToneOptions();
@@ -197,8 +186,9 @@ function renderSkinToneOptions() {
   container.innerHTML = "";
 
   SKIN_TONES.forEach((tone) => {
-    const button = createOptionButton({
+    const button = createSwatchButton({
       label: tone.label,
+      color: tone.swatch,
       isActive: state.skinTone === tone.id,
       onClick: () => {
         state.skinTone = tone.id;
@@ -223,10 +213,10 @@ function renderEyeShapeOptions() {
         state.eyeShape = shape.id;
 
         /*
-          При выборе любой формы глаз сначала показываем белую версию этой формы:
-          eyes_{shape}_white.png
+          При клике на любую форму глаз сначала показываем:
+          eyes_light_gray_{shape}_.png
         */
-        state.eyeColor = null;
+        state.eyeColor = DEFAULT_EYE_COLOR;
 
         renderEyeShapeOptions();
         renderEyeColorOptions();
@@ -243,8 +233,9 @@ function renderEyeColorOptions() {
   container.innerHTML = "";
 
   EYE_COLORS.forEach((color) => {
-    const button = createOptionButton({
+    const button = createSwatchButton({
       label: color.label,
+      color: color.swatch,
       isActive: state.eyeColor === color.id,
       onClick: () => {
         state.eyeColor = color.id;
@@ -284,6 +275,19 @@ function createOptionButton({ label, isActive, onClick }) {
   return button;
 }
 
+function createSwatchButton({ label, color, isActive, onClick }) {
+  const button = document.createElement("button");
+  button.className = "swatch-button";
+  button.type = "button";
+  button.setAttribute("aria-label", label);
+  button.setAttribute("title", label);
+  button.style.setProperty("--swatch-color", color);
+  button.classList.toggle("is-active", isActive);
+  button.addEventListener("click", onClick);
+
+  return button;
+}
+
 function toggleTrait(trait) {
   const isSelected = state.selectedTraits.includes(trait);
 
@@ -315,13 +319,19 @@ function updateTraitsState() {
 }
 
 function getFaceImagePath() {
-  const skinToneForImage = state.skinTone || TECHNICAL_SKIN_TONE;
-  return `${ASSET_BASE_PATH}/base_skin_${skinToneForImage}_${state.faceShape}.png`;
+  return `${ASSET_BASE_PATH}/base_skin_${state.skinTone}_${state.faceShape}.png`;
 }
 
 function getEyesImagePath() {
-  const eyeColorForImage = state.eyeColor || TECHNICAL_EYE_COLOR;
-  return `${ASSET_EYES_PATH}/eyes_${state.eyeShape}_${eyeColorForImage}.png`;
+  /*
+    Новая схема naming:
+    eyes_{color}_{shape}_.png
+
+    Пример:
+    eyes_light_gray_no_lashes_.png
+    eyes_green_winged_liner_.png
+  */
+  return `${ASSET_EYES_PATH}/eyes_${state.eyeColor}_${state.eyeShape}_.png`;
 }
 
 function updateAvatar() {
@@ -370,7 +380,6 @@ function applyEyeStyleClass(elementId, eyeShape) {
     "eyes-style-long_lashes",
     "eyes-style-winged_liner",
     "eyes-style-smokey",
-    "eyes-style-narrow",
     "eyes-style-small_waterline"
   );
 
@@ -394,10 +403,10 @@ function setBackground(elementId, imagePath) {
 
 function resetCharacter() {
   state.faceShape = "oval";
-  state.skinTone = null;
+  state.skinTone = DEFAULT_SKIN_TONE;
 
   state.eyeShape = "no_lashes";
-  state.eyeColor = null;
+  state.eyeColor = DEFAULT_EYE_COLOR;
 
   state.selectedTraits = [];
 
