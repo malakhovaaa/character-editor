@@ -186,8 +186,7 @@ h4 {
 
 /*
   Окно аватара.
-  Все, что выходит ниже окна, обрезается.
-  Это не дает волосам залезать на табы и кнопки.
+  Есть верхний запас для высокой прически, но нижняя часть все равно обрезается.
 */
 
 .avatar-window {
@@ -197,24 +196,28 @@ h4 {
 
 .avatar-window-editor {
   width: min(72vw, 300px);
-  height: min(84vw, 350px);
+  height: min(92vw, 382px);
+  margin-top: -32px;
   margin-bottom: 8px;
 }
 
 .avatar-window-final {
   width: min(54vw, 220px);
-  height: min(64vw, 265px);
-  margin: 0 auto;
+  height: min(70vw, 289px);
+  margin: -24px auto 0;
 }
 
 .portrait {
-  position: relative;
+  position: absolute;
+  left: 0;
+  top: 32px;
   width: 100%;
   aspect-ratio: 1 / 1;
   overflow: visible;
 }
 
 .final-portrait {
+  top: 24px;
   width: 100%;
   margin: 0 auto;
 }
@@ -672,7 +675,8 @@ h4 {
 
   .avatar-window-editor {
     width: 380px;
-    height: 440px;
+    height: 472px;
+    margin-top: -32px;
   }
 
   .portrait {
