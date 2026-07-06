@@ -207,11 +207,20 @@ h4 {
   pointer-events: none;
 }
 
-.face-layer {
+/*
+  Слои персонажа:
+  hair_back  — за лицом
+  face       — база лица
+  eyes       — глаза
+  details    — детали
+  hair_front — передние волосы поверх лица
+*/
+
+.hair-back-layer {
   z-index: 1;
 }
 
-.hair-layer {
+.face-layer {
   z-index: 2;
 }
 
@@ -221,6 +230,21 @@ h4 {
 
 .details-layer {
   z-index: 4;
+}
+
+.hair-front-layer {
+  z-index: 5;
+}
+
+/*
+  Размеры волос пока не регулируем.
+  Следующим этапом можно будет отдельно настроить:
+  .hair-style-straight
+  .hair-style-cascade
+*/
+.hair-back-layer,
+.hair-front-layer {
+  transform-origin: center center;
 }
 
 /* Базовая посадка глаз */
@@ -347,7 +371,7 @@ h4 {
 /* Звездочки выбора цвета */
 .star-swatch-grid {
   display: grid;
-  grid-template-columns: repeat(6, 1fr);
+  grid-template-columns: repeat(7, 1fr);
   gap: 8px;
   align-items: center;
 }
@@ -356,7 +380,7 @@ h4 {
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
-  min-height: 38px;
+  min-height: 36px;
   border: 0;
   background: transparent;
   cursor: pointer;
