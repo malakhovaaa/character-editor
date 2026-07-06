@@ -29,16 +29,17 @@
       <header class="screen-header">
         <p class="eyebrow">CHARACTER EDITOR</p>
         <h2>создание персонажа</h2>
-        <p class="subtitle">выбери лицо, глаза и цветовые детали</p>
+        <p class="subtitle">выбери лицо, глаза, волосы и цветовые детали</p>
       </header>
 
       <div class="editor-layout">
         <div class="portrait-wrap">
           <div class="portrait" id="portrait">
+            <div class="layer hair-back-layer" id="hairBackLayer"></div>
             <div class="layer face-layer" id="faceLayer"></div>
-            <div class="layer hair-layer" id="hairLayer"></div>
             <div class="layer eyes-layer" id="eyesLayer"></div>
             <div class="layer details-layer" id="detailsLayer"></div>
+            <div class="layer hair-front-layer" id="hairFrontLayer"></div>
           </div>
         </div>
 
@@ -75,8 +76,14 @@
           </div>
 
           <div class="tab-content" id="tab-hair" data-tab-content="hair">
-            <div class="placeholder-block">
-              волосы добавим следующим этапом
+            <div class="control-section">
+              <h3>прическа</h3>
+              <div class="option-grid" id="hairStyleOptions"></div>
+            </div>
+
+            <div class="control-section">
+              <h3>цвет волос</h3>
+              <div class="star-swatch-grid" id="hairColorOptions"></div>
             </div>
           </div>
 
@@ -145,10 +152,11 @@
             </div>
 
             <div class="portrait final-portrait" id="finalPortrait">
+              <div class="layer hair-back-layer" id="finalHairBackLayer"></div>
               <div class="layer face-layer" id="finalFaceLayer"></div>
-              <div class="layer hair-layer" id="finalHairLayer"></div>
               <div class="layer eyes-layer" id="finalEyesLayer"></div>
               <div class="layer details-layer" id="finalDetailsLayer"></div>
+              <div class="layer hair-front-layer" id="finalHairFrontLayer"></div>
             </div>
 
             <div class="badge-traits">
