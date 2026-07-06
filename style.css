@@ -208,12 +208,12 @@ h4 {
 }
 
 /*
-  Слои персонажа:
-  hair_back  — за лицом
-  face       — база лица
-  eyes       — глаза
-  details    — детали
-  hair_front — передние волосы поверх лица
+  Новый порядок слоев:
+  1. hair_back  — за лицом
+  2. face       — лицо
+  3. hair_front — передняя часть волос
+  4. eyes       — глаза поверх волос
+  5. details    — детали поверх всего
 */
 
 .hair-back-layer {
@@ -224,26 +224,35 @@ h4 {
   z-index: 2;
 }
 
-.eyes-layer {
+.hair-front-layer {
   z-index: 3;
 }
 
-.details-layer {
+.eyes-layer {
   z-index: 4;
 }
 
-.hair-front-layer {
+.details-layer {
   z-index: 5;
 }
 
 /*
-  Размеры волос пока не регулируем.
-  Следующим этапом можно будет отдельно настроить:
-  .hair-style-straight
-  .hair-style-cascade
+  Увеличение волос.
+  Сейчас увеличиваем оба слоя одинаково.
+  Следующим этапом можно будет отдельно регулировать:
+  - hair_straight front/back
+  - hair_cascade front/back
 */
-.hair-back-layer,
-.hair-front-layer {
+
+#hairBackLayer,
+#hairFrontLayer {
+  transform: scale(1.16);
+  transform-origin: center center;
+}
+
+#finalHairBackLayer,
+#finalHairFrontLayer {
+  transform: scale(1.16);
   transform-origin: center center;
 }
 
