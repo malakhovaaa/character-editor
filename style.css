@@ -223,7 +223,7 @@ h4 {
   z-index: 4;
 }
 
-/* Базовая посадка глаз — как у no_lashes */
+/* Базовая посадка глаз */
 #eyesLayer,
 #finalEyesLayer {
   transform-origin: center center;
@@ -232,8 +232,7 @@ h4 {
 /* Editor eyes sizes */
 #eyesLayer.eyes-style-no_lashes,
 #eyesLayer.eyes-style-winged_liner,
-#eyesLayer.eyes-style-smokey,
-#eyesLayer.eyes-style-narrow {
+#eyesLayer.eyes-style-smokey {
   transform: translateY(-50px) scale(0.52);
 }
 
@@ -252,8 +251,7 @@ h4 {
 /* Final badge eyes sizes */
 #finalEyesLayer.eyes-style-no_lashes,
 #finalEyesLayer.eyes-style-winged_liner,
-#finalEyesLayer.eyes-style-smokey,
-#finalEyesLayer.eyes-style-narrow {
+#finalEyesLayer.eyes-style-smokey {
   transform: translateY(-40px) scale(0.52);
 }
 
@@ -344,6 +342,54 @@ h4 {
   border-color: var(--ink);
   background: var(--ink);
   color: var(--paper);
+}
+
+/* Цветовые кнопки */
+.swatch-grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 8px;
+}
+
+.swatch-button {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  min-height: 38px;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: var(--swatch-color);
+  cursor: pointer;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.34);
+}
+
+.swatch-button.is-active {
+  border-color: var(--ink);
+  box-shadow:
+    inset 0 0 0 2px rgba(255, 255, 255, 0.62),
+    0 0 0 2px var(--ink);
+}
+
+.swatch-button::after {
+  content: attr(aria-label);
+  position: absolute;
+  left: 50%;
+  bottom: -22px;
+  transform: translateX(-50%);
+  display: none;
+  padding: 3px 7px;
+  border-radius: 999px;
+  background: var(--ink);
+  color: var(--paper);
+  white-space: nowrap;
+  font-size: 10px;
+  line-height: 1;
+  z-index: 10;
+}
+
+.swatch-button:active::after,
+.swatch-button:focus-visible::after {
+  display: block;
 }
 
 .placeholder-block {
