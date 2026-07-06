@@ -208,12 +208,12 @@ h4 {
 }
 
 /*
-  Новый порядок слоев:
-  1. hair_back  — за лицом
-  2. face       — лицо
-  3. hair_front — передняя часть волос
-  4. eyes       — глаза поверх волос
-  5. details    — детали поверх всего
+  Порядок слоев:
+  1. hair_back
+  2. face
+  3. hair_front
+  4. eyes
+  5. details
 */
 
 .hair-back-layer {
@@ -237,23 +237,46 @@ h4 {
 }
 
 /*
-  Увеличение волос.
-  Сейчас увеличиваем оба слоя одинаково.
-  Следующим этапом можно будет отдельно регулировать:
-  - hair_straight front/back
-  - hair_cascade front/back
+  Волосы:
+  straight — базовый размер
+  cascade — больше и немного ниже
+  cascade_back — больше cascade_front
 */
 
 #hairBackLayer,
-#hairFrontLayer {
-  transform: scale(1.16);
+#hairFrontLayer,
+#finalHairBackLayer,
+#finalHairFrontLayer {
   transform-origin: center center;
 }
 
-#finalHairBackLayer,
-#finalHairFrontLayer {
+/* straight */
+#hairBackLayer.hair-style-straight,
+#hairFrontLayer.hair-style-straight {
   transform: scale(1.16);
-  transform-origin: center center;
+}
+
+#finalHairBackLayer.hair-style-straight,
+#finalHairFrontLayer.hair-style-straight {
+  transform: scale(1.16);
+}
+
+/* cascade — editor */
+#hairBackLayer.hair-style-cascade {
+  transform: translateY(10px) scale(1.30);
+}
+
+#hairFrontLayer.hair-style-cascade {
+  transform: translateY(8px) scale(1.22);
+}
+
+/* cascade — final badge */
+#finalHairBackLayer.hair-style-cascade {
+  transform: translateY(10px) scale(1.30);
+}
+
+#finalHairFrontLayer.hair-style-cascade {
+  transform: translateY(8px) scale(1.22);
 }
 
 /* Базовая посадка глаз */
