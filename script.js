@@ -1,6 +1,9 @@
 const ASSET_BASE_PATH = "assets/avatar/base";
 const ASSET_EYES_PATH = "assets/avatar/eyes";
 
+const TECHNICAL_SKIN_TONE = "white";
+const TECHNICAL_EYE_COLOR = "white";
+
 const FACE_SHAPES = [
   { id: "oval", label: "овал" },
   { id: "round", label: "круглое" },
@@ -21,9 +24,9 @@ const EYE_SHAPES = [
   { id: "short_lashes", label: "короткие ресницы" },
   { id: "long_lashes", label: "длинные ресницы" },
   { id: "winged_liner", label: "стрелки" },
-  { id: "smokey", label: "smokey" },
-  { id: "narrow", label: "узкие" },
-  { id: "small_waterline", label: "waterline" }
+  { id: "smokey", label: "Смоки" },
+  { id: "narrow", label: "миндалевидные" },
+  { id: "small_waterline", label: "подведенные" }
 ];
 
 const EYE_COLORS = [
@@ -65,10 +68,20 @@ const TRAITS = [
 
 const state = {
   faceShape: "oval",
+
+  /*
+    null = технический белый вариант:
+    base_skin_white_{shape}.png
+  */
   skinTone: null,
 
   eyeShape: "no_lashes",
-  eyeColor: "light_gray",
+
+  /*
+    null = технический белый вариант:
+    eyes_{shape}_white.png
+  */
+  eyeColor: null,
 
   selectedTraits: []
 };
@@ -146,6 +159,8 @@ function initTabs() {
       document.querySelectorAll("[data-tab-content]").forEach((content) => {
         content.classList.toggle("is-active", content.dataset.tabContent === targetTab);
       });
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
     });
   });
 }
@@ -162,9 +177,8 @@ function renderFaceShapeOptions() {
         state.faceShape = shape.id;
 
         /*
-          Важно:
-          при выборе формы лица сначала показываем технически самое светлое лицо.
-          Пользователь выбирает оттенок кожи отдельным действием.
+          При выборе любой формы лица сначала показываем белую версию этой формы:
+          base_skin_white_{shape}.png
         */
         state.skinTone = null;
 
@@ -209,11 +223,10 @@ function renderEyeShapeOptions() {
         state.eyeShape = shape.id;
 
         /*
-          Важно:
-          при выборе формы глаз сначала показываем почти белые глаза.
-          По ТЗ это light_gray — светло-серые, почти белые, но читаемые.
+          При выборе любой формы глаз сначала показываем белую версию этой формы:
+          eyes_{shape}_white.png
         */
-        state.eyeColor = "light_gray";
+        state.eyeColor = null;
 
         renderEyeShapeOptions();
         renderEyeColorOptions();
@@ -302,18 +315,20 @@ function updateTraitsState() {
 }
 
 function getFaceImagePath() {
-  const skinToneForImage = state.skinTone || "white";
+  const skinToneForImage = state.skinTone || TECHNICAL_SKIN_TONE;
   return `${ASSET_BASE_PATH}/base_skin_${skinToneForImage}_${state.faceShape}.png`;
 }
 
 function getEyesImagePath() {
-  const eyeColorForImage = state.eyeColor || "light_gray";
+  const eyeColorForImage = state.eyeColor || TECHNICAL_EYE_COLOR;
   return `${ASSET_EYES_PATH}/eyes_${state.eyeShape}_${eyeColorForImage}.png`;
 }
 
 function updateAvatar() {
   setBackground("faceLayer", getFaceImagePath());
   setBackground("eyesLayer", getEyesImagePath());
+
+  applyEyeStyleClass("eyesLayer", state.eyeShape);
 
   /*
     Волосы и детали пока очищаем.
@@ -327,6 +342,8 @@ function updateFinalCard() {
   setBackground("finalFaceLayer", getFaceImagePath());
   setBackground("finalEyesLayer", getEyesImagePath());
 
+  applyEyeStyleClass("finalEyesLayer", state.eyeShape);
+
   setBackground("finalHairLayer", "");
   setBackground("finalDetailsLayer", "");
 
@@ -338,6 +355,26 @@ function updateFinalCard() {
     li.textContent = trait;
     finalTraitsList.appendChild(li);
   });
+}
+
+function applyEyeStyleClass(elementId, eyeShape) {
+  const element = document.getElementById(elementId);
+
+  if (!element) {
+    return;
+  }
+
+  element.classList.remove(
+    "eyes-style-no_lashes",
+    "eyes-style-short_lashes",
+    "eyes-style-long_lashes",
+    "eyes-style-winged_liner",
+    "eyes-style-smokey",
+    "eyes-style-narrow",
+    "eyes-style-small_waterline"
+  );
+
+  element.classList.add(`eyes-style-${eyeShape}`);
 }
 
 function setBackground(elementId, imagePath) {
@@ -360,7 +397,7 @@ function resetCharacter() {
   state.skinTone = null;
 
   state.eyeShape = "no_lashes";
-  state.eyeColor = "light_gray";
+  state.eyeColor = null;
 
   state.selectedTraits = [];
 
