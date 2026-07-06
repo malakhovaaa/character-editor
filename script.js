@@ -120,35 +120,37 @@ function initTelegram() {
   }
 }
 
-function safeAddListener(elementId, eventName, handler) {
-  const element = document.getElementById(elementId);
+function getEl(id) {
+  return document.getElementById(id);
+}
+
+function safeClick(id, handler) {
+  const element = getEl(id);
   if (!element) return;
-  element.addEventListener(eventName, handler);
+  element.addEventListener("click", handler);
 }
 
 function initNavigation() {
-  safeAddListener("startButton", "click", () => showScreen("screen2"));
-  safeAddListener("toTraitsButton", "click", () => showScreen("screen3"));
-  safeAddListener("toCongratsButton", "click", () => showScreen("screen4"));
+  safeClick("startButton", () => showScreen("screen2"));
+  safeClick("toTraitsButton", () => showScreen("screen3"));
+  safeClick("toCongratsButton", () => showScreen("screen4"));
 
-  safeAddListener("toResultButton", "click", () => {
+  safeClick("toResultButton", () => {
     updateFinalCard();
     showScreen("screen5");
   });
 
-  safeAddListener("restartButton", "click", () => {
+  safeClick("restartButton", () => {
     resetCharacter();
     showScreen("screen2");
   });
 
-  safeAddListener("downloadButton", "click", downloadBadge);
-  safeAddListener("shareButton", "click", shareBadge);
+  safeClick("downloadButton", downloadBadge);
+  safeClick("shareButton", shareBadge);
 }
 
 function showScreen(screenId) {
-  const screens = document.querySelectorAll("[data-screen]");
-
-  screens.forEach((screen) => {
+  document.querySelectorAll("[data-screen]").forEach((screen) => {
     screen.classList.toggle("is-active", screen.id === screenId);
   });
 
@@ -156,9 +158,7 @@ function showScreen(screenId) {
 }
 
 function initTabs() {
-  const tabButtons = document.querySelectorAll("[data-tab]");
-
-  tabButtons.forEach((button) => {
+  document.querySelectorAll("[data-tab]").forEach((button) => {
     button.addEventListener("click", () => {
       const targetTab = button.dataset.tab;
 
@@ -176,154 +176,154 @@ function initTabs() {
 }
 
 function renderFaceShapeOptions() {
-  const container = document.getElementById("faceShapeOptions");
+  const container = getEl("faceShapeOptions");
   if (!container) return;
 
   container.innerHTML = "";
 
   FACE_SHAPES.forEach((shape) => {
-    const button = createOptionButton({
-      label: shape.label,
-      isActive: state.faceShape === shape.id,
-      onClick: () => {
-        state.faceShape = shape.id;
-        state.skinTone = DEFAULT_SKIN_TONE;
+    container.appendChild(
+      createOptionButton({
+        label: shape.label,
+        isActive: state.faceShape === shape.id,
+        onClick: () => {
+          state.faceShape = shape.id;
+          state.skinTone = DEFAULT_SKIN_TONE;
 
-        renderFaceShapeOptions();
-        renderSkinToneOptions();
-        updateAvatar();
-      }
-    });
-
-    container.appendChild(button);
+          renderFaceShapeOptions();
+          renderSkinToneOptions();
+          updateAvatar();
+        }
+      })
+    );
   });
 }
 
 function renderSkinToneOptions() {
-  const container = document.getElementById("skinToneOptions");
+  const container = getEl("skinToneOptions");
   if (!container) return;
 
   container.innerHTML = "";
 
   SKIN_TONES.forEach((tone) => {
-    const button = createStarSwatchButton({
-      label: tone.label,
-      color: tone.swatch,
-      isActive: state.skinTone === tone.id,
-      onClick: () => {
-        state.skinTone = tone.id;
-        renderSkinToneOptions();
-        updateAvatar();
-      }
-    });
-
-    container.appendChild(button);
+    container.appendChild(
+      createStarSwatchButton({
+        label: tone.label,
+        color: tone.swatch,
+        isActive: state.skinTone === tone.id,
+        onClick: () => {
+          state.skinTone = tone.id;
+          renderSkinToneOptions();
+          updateAvatar();
+        }
+      })
+    );
   });
 }
 
 function renderEyeShapeOptions() {
-  const container = document.getElementById("eyeShapeOptions");
+  const container = getEl("eyeShapeOptions");
   if (!container) return;
 
   container.innerHTML = "";
 
   EYE_SHAPES.forEach((shape) => {
-    const button = createOptionButton({
-      label: shape.label,
-      isActive: state.eyeShape === shape.id,
-      onClick: () => {
-        state.eyeShape = shape.id;
-        state.eyeColor = DEFAULT_EYE_COLOR;
+    container.appendChild(
+      createOptionButton({
+        label: shape.label,
+        isActive: state.eyeShape === shape.id,
+        onClick: () => {
+          state.eyeShape = shape.id;
+          state.eyeColor = DEFAULT_EYE_COLOR;
 
-        renderEyeShapeOptions();
-        renderEyeColorOptions();
-        updateAvatar();
-      }
-    });
-
-    container.appendChild(button);
+          renderEyeShapeOptions();
+          renderEyeColorOptions();
+          updateAvatar();
+        }
+      })
+    );
   });
 }
 
 function renderEyeColorOptions() {
-  const container = document.getElementById("eyeColorOptions");
+  const container = getEl("eyeColorOptions");
   if (!container) return;
 
   container.innerHTML = "";
 
   EYE_COLORS.forEach((color) => {
-    const button = createStarSwatchButton({
-      label: color.label,
-      color: color.swatch,
-      isActive: state.eyeColor === color.id,
-      onClick: () => {
-        state.eyeColor = color.id;
-        renderEyeColorOptions();
-        updateAvatar();
-      }
-    });
-
-    container.appendChild(button);
+    container.appendChild(
+      createStarSwatchButton({
+        label: color.label,
+        color: color.swatch,
+        isActive: state.eyeColor === color.id,
+        onClick: () => {
+          state.eyeColor = color.id;
+          renderEyeColorOptions();
+          updateAvatar();
+        }
+      })
+    );
   });
 }
 
 function renderHairStyleOptions() {
-  const container = document.getElementById("hairStyleOptions");
+  const container = getEl("hairStyleOptions");
   if (!container) return;
 
   container.innerHTML = "";
 
   HAIR_STYLES.forEach((style) => {
-    const button = createOptionButton({
-      label: style.label,
-      isActive: state.hairStyle === style.id,
-      onClick: () => {
-        state.hairStyle = style.id;
+    container.appendChild(
+      createOptionButton({
+        label: style.label,
+        isActive: state.hairStyle === style.id,
+        onClick: () => {
+          state.hairStyle = style.id;
 
-        if (state.hairStyle && !state.hairColor) {
-          state.hairColor = DEFAULT_HAIR_COLOR;
+          if (state.hairStyle && !state.hairColor) {
+            state.hairColor = DEFAULT_HAIR_COLOR;
+          }
+
+          renderHairStyleOptions();
+          renderHairColorOptions();
+          updateAvatar();
         }
-
-        renderHairStyleOptions();
-        renderHairColorOptions();
-        updateAvatar();
-      }
-    });
-
-    container.appendChild(button);
+      })
+    );
   });
 }
 
 function renderHairColorOptions() {
-  const container = document.getElementById("hairColorOptions");
+  const container = getEl("hairColorOptions");
   if (!container) return;
 
   container.innerHTML = "";
 
   HAIR_COLORS.forEach((color) => {
-    const button = createStarSwatchButton({
-      label: color.label,
-      color: color.swatch,
-      isActive: state.hairColor === color.id,
-      onClick: () => {
-        state.hairColor = color.id;
+    container.appendChild(
+      createStarSwatchButton({
+        label: color.label,
+        color: color.swatch,
+        isActive: state.hairColor === color.id,
+        onClick: () => {
+          state.hairColor = color.id;
 
-        if (!state.hairStyle) {
-          state.hairStyle = "straight";
+          if (!state.hairStyle) {
+            state.hairStyle = "straight";
+          }
+
+          renderHairStyleOptions();
+          renderHairColorOptions();
+          updateAvatar();
         }
-
-        renderHairStyleOptions();
-        renderHairColorOptions();
-        updateAvatar();
-      }
-    });
-
-    container.appendChild(button);
+      })
+    );
   });
 }
 
 function renderTraits() {
-  const container = document.getElementById("traitsGrid");
+  const container = getEl("traitsGrid");
   if (!container) return;
 
   container.innerHTML = "";
@@ -333,9 +333,7 @@ function renderTraits() {
     button.className = "trait-button";
     button.type = "button";
     button.textContent = trait;
-
     button.addEventListener("click", () => toggleTrait(trait));
-
     container.appendChild(button);
   });
 }
@@ -347,7 +345,6 @@ function createOptionButton({ label, isActive, onClick }) {
   button.textContent = label;
   button.classList.toggle("is-active", isActive);
   button.addEventListener("click", onClick);
-
   return button;
 }
 
@@ -366,20 +363,14 @@ function createStarSwatchButton({ label, color, isActive, onClick }) {
   button.appendChild(hiddenLabel);
 
   button.addEventListener("click", onClick);
-
   return button;
 }
 
 function toggleTrait(trait) {
-  const isSelected = state.selectedTraits.includes(trait);
-
-  if (isSelected) {
+  if (state.selectedTraits.includes(trait)) {
     state.selectedTraits = state.selectedTraits.filter((item) => item !== trait);
   } else {
-    if (state.selectedTraits.length >= 5) {
-      return;
-    }
-
+    if (state.selectedTraits.length >= 5) return;
     state.selectedTraits.push(trait);
   }
 
@@ -387,19 +378,15 @@ function toggleTrait(trait) {
 }
 
 function updateTraitsState() {
-  const buttons = document.querySelectorAll(".trait-button");
-  const counter = document.getElementById("traitsCounter");
-  const toCongratsButton = document.getElementById("toCongratsButton");
-
-  buttons.forEach((button) => {
+  document.querySelectorAll(".trait-button").forEach((button) => {
     const trait = button.textContent.replace("★ ", "").trim();
     button.classList.toggle("is-active", state.selectedTraits.includes(trait));
   });
 
-  if (counter) {
-    counter.textContent = `${state.selectedTraits.length}/5`;
-  }
+  const counter = getEl("traitsCounter");
+  if (counter) counter.textContent = `${state.selectedTraits.length}/5`;
 
+  const toCongratsButton = getEl("toCongratsButton");
   if (toCongratsButton) {
     toCongratsButton.disabled = state.selectedTraits.length !== 5;
   }
@@ -409,75 +396,48 @@ function getFaceImagePath() {
   return `${ASSET_BASE_PATH}/base_skin_${state.skinTone}_${state.faceShape}.png`;
 }
 
-/*
-  Глаза:
-  1. сначала старый рабочий формат:
-     eyes_{shape}_{color}.png
-  2. потом новый формат:
-     eyes_{color}_{shape}_.png
-*/
-function getPrimaryEyesImagePath() {
+function getEyesImagePath() {
   return `${ASSET_EYES_PATH}/eyes_${state.eyeShape}_${state.eyeColor}.png`;
 }
 
-function getFallbackEyesImagePath() {
-  return `${ASSET_EYES_PATH}/eyes_${state.eyeColor}_${state.eyeShape}_.png`;
-}
-
 function getHairBackImagePath() {
-  if (!state.hairStyle) {
-    return "";
-  }
-
+  if (!state.hairStyle) return "";
   return `${ASSET_HAIR_PATH}/hair_${state.hairStyle}_${state.hairColor}_back.png`;
 }
 
 function getHairFrontImagePath() {
-  if (!state.hairStyle) {
-    return "";
-  }
-
+  if (!state.hairStyle) return "";
   return `${ASSET_HAIR_PATH}/hair_${state.hairStyle}_${state.hairColor}_front.png`;
 }
 
 function updateAvatar() {
   setBackground("faceLayer", getFaceImagePath());
-
-  setBackgroundWithFallback(
-    "eyesLayer",
-    getPrimaryEyesImagePath(),
-    getFallbackEyesImagePath()
-  );
+  setBackground("eyesLayer", getEyesImagePath());
 
   setBackground("hairBackLayer", getHairBackImagePath());
   setBackground("hairFrontLayer", getHairFrontImagePath());
 
+  setBackground("detailsLayer", "");
+
   applyEyeStyleClass("eyesLayer", state.eyeShape);
   applyHairStyleClass("hairBackLayer", state.hairStyle);
   applyHairStyleClass("hairFrontLayer", state.hairStyle);
-
-  setBackground("detailsLayer", "");
 }
 
 function updateFinalCard() {
   setBackground("finalFaceLayer", getFaceImagePath());
-
-  setBackgroundWithFallback(
-    "finalEyesLayer",
-    getPrimaryEyesImagePath(),
-    getFallbackEyesImagePath()
-  );
+  setBackground("finalEyesLayer", getEyesImagePath());
 
   setBackground("finalHairBackLayer", getHairBackImagePath());
   setBackground("finalHairFrontLayer", getHairFrontImagePath());
+
+  setBackground("finalDetailsLayer", "");
 
   applyEyeStyleClass("finalEyesLayer", state.eyeShape);
   applyHairStyleClass("finalHairBackLayer", state.hairStyle);
   applyHairStyleClass("finalHairFrontLayer", state.hairStyle);
 
-  setBackground("finalDetailsLayer", "");
-
-  const finalTraitsList = document.getElementById("finalTraitsList");
+  const finalTraitsList = getEl("finalTraitsList");
   if (!finalTraitsList) return;
 
   finalTraitsList.innerHTML = "";
@@ -489,8 +449,20 @@ function updateFinalCard() {
   });
 }
 
+function setBackground(elementId, imagePath) {
+  const element = getEl(elementId);
+  if (!element) return;
+
+  if (!imagePath) {
+    element.style.backgroundImage = "";
+    return;
+  }
+
+  element.style.backgroundImage = `url("${imagePath}")`;
+}
+
 function applyEyeStyleClass(elementId, eyeShape) {
-  const element = document.getElementById(elementId);
+  const element = getEl(elementId);
   if (!element) return;
 
   element.classList.remove(
@@ -506,57 +478,14 @@ function applyEyeStyleClass(elementId, eyeShape) {
 }
 
 function applyHairStyleClass(elementId, hairStyle) {
-  const element = document.getElementById(elementId);
+  const element = getEl(elementId);
   if (!element) return;
 
-  element.classList.remove(
-    "hair-style-straight",
-    "hair-style-cascade"
-  );
+  element.classList.remove("hair-style-straight", "hair-style-cascade");
 
   if (hairStyle) {
     element.classList.add(`hair-style-${hairStyle}`);
   }
-}
-
-function setBackground(elementId, imagePath) {
-  const element = document.getElementById(elementId);
-  if (!element) return;
-
-  if (!imagePath) {
-    element.style.backgroundImage = "";
-    return;
-  }
-
-  element.style.backgroundImage = `url("${imagePath}")`;
-}
-
-function setBackgroundWithFallback(elementId, primaryPath, fallbackPath) {
-  const element = document.getElementById(elementId);
-  if (!element) return;
-
-  const image = new Image();
-
-  image.onload = () => {
-    element.style.backgroundImage = `url("${primaryPath}")`;
-  };
-
-  image.onerror = () => {
-    const fallbackImage = new Image();
-
-    fallbackImage.onload = () => {
-      element.style.backgroundImage = `url("${fallbackPath}")`;
-    };
-
-    fallbackImage.onerror = () => {
-      element.style.backgroundImage = "";
-      console.warn("Asset not found:", primaryPath, fallbackPath);
-    };
-
-    fallbackImage.src = fallbackPath;
-  };
-
-  image.src = primaryPath;
 }
 
 function resetCharacter() {
@@ -582,11 +511,8 @@ function resetCharacter() {
 }
 
 async function downloadBadge() {
-  const badge = document.getElementById("badgeCapture");
-
-  if (!badge || typeof html2canvas === "undefined") {
-    return;
-  }
+  const badge = getEl("badgeCapture");
+  if (!badge || typeof html2canvas === "undefined") return;
 
   const canvas = await html2canvas(badge, {
     backgroundColor: null,
