@@ -186,7 +186,7 @@ function renderSkinToneOptions() {
   container.innerHTML = "";
 
   SKIN_TONES.forEach((tone) => {
-    const button = createSwatchButton({
+    const button = createStarSwatchButton({
       label: tone.label,
       color: tone.swatch,
       isActive: state.skinTone === tone.id,
@@ -214,7 +214,7 @@ function renderEyeShapeOptions() {
 
         /*
           При клике на любую форму глаз сначала показываем:
-          eyes_light_gray_{shape}_.png
+          light_gray-версию выбранной формы.
         */
         state.eyeColor = DEFAULT_EYE_COLOR;
 
@@ -233,7 +233,7 @@ function renderEyeColorOptions() {
   container.innerHTML = "";
 
   EYE_COLORS.forEach((color) => {
-    const button = createSwatchButton({
+    const button = createStarSwatchButton({
       label: color.label,
       color: color.swatch,
       isActive: state.eyeColor === color.id,
@@ -275,14 +275,20 @@ function createOptionButton({ label, isActive, onClick }) {
   return button;
 }
 
-function createSwatchButton({ label, color, isActive, onClick }) {
+function createStarSwatchButton({ label, color, isActive, onClick }) {
   const button = document.createElement("button");
-  button.className = "swatch-button";
+  button.className = "star-swatch-button";
   button.type = "button";
   button.setAttribute("aria-label", label);
   button.setAttribute("title", label);
   button.style.setProperty("--swatch-color", color);
   button.classList.toggle("is-active", isActive);
+
+  const hiddenLabel = document.createElement("span");
+  hiddenLabel.className = "visually-hidden";
+  hiddenLabel.textContent = label;
+  button.appendChild(hiddenLabel);
+
   button.addEventListener("click", onClick);
 
   return button;
@@ -322,35 +328,53 @@ function getFaceImagePath() {
   return `${ASSET_BASE_PATH}/base_skin_${state.skinTone}_${state.faceShape}.png`;
 }
 
-function getEyesImagePath() {
+function getPrimaryEyesImagePath() {
   /*
-    Новая схема naming:
+    Новый формат:
     eyes_{color}_{shape}_.png
 
     Пример:
     eyes_light_gray_no_lashes_.png
-    eyes_green_winged_liner_.png
   */
   return `${ASSET_EYES_PATH}/eyes_${state.eyeColor}_${state.eyeShape}_.png`;
 }
 
+function getFallbackEyesImagePath() {
+  /*
+    Старый формат:
+    eyes_{shape}_{color}.png
+
+    Пример:
+    eyes_no_lashes_light_gray.png
+
+    Нужен, чтобы глаза не пропадали, если assets еще не переименованы.
+  */
+  return `${ASSET_EYES_PATH}/eyes_${state.eyeShape}_${state.eyeColor}.png`;
+}
+
 function updateAvatar() {
   setBackground("faceLayer", getFaceImagePath());
-  setBackground("eyesLayer", getEyesImagePath());
+
+  setBackgroundWithFallback(
+    "eyesLayer",
+    getPrimaryEyesImagePath(),
+    getFallbackEyesImagePath()
+  );
 
   applyEyeStyleClass("eyesLayer", state.eyeShape);
 
-  /*
-    Волосы и детали пока очищаем.
-    Когда добавим assets, сюда подключим hair/details-логику.
-  */
   setBackground("hairLayer", "");
   setBackground("detailsLayer", "");
 }
 
 function updateFinalCard() {
   setBackground("finalFaceLayer", getFaceImagePath());
-  setBackground("finalEyesLayer", getEyesImagePath());
+
+  setBackgroundWithFallback(
+    "finalEyesLayer",
+    getPrimaryEyesImagePath(),
+    getFallbackEyesImagePath()
+  );
 
   applyEyeStyleClass("finalEyesLayer", state.eyeShape);
 
@@ -399,6 +423,37 @@ function setBackground(elementId, imagePath) {
   }
 
   element.style.backgroundImage = `url("${imagePath}")`;
+}
+
+function setBackgroundWithFallback(elementId, primaryPath, fallbackPath) {
+  const element = document.getElementById(elementId);
+
+  if (!element) {
+    return;
+  }
+
+  const image = new Image();
+
+  image.onload = () => {
+    element.style.backgroundImage = `url("${primaryPath}")`;
+  };
+
+  image.onerror = () => {
+    const fallbackImage = new Image();
+
+    fallbackImage.onload = () => {
+      element.style.backgroundImage = `url("${fallbackPath}")`;
+    };
+
+    fallbackImage.onerror = () => {
+      element.style.backgroundImage = "";
+      console.warn("Asset not found:", primaryPath, fallbackPath);
+    };
+
+    fallbackImage.src = fallbackPath;
+  };
+
+  image.src = primaryPath;
 }
 
 function resetCharacter() {
