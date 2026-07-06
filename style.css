@@ -30,7 +30,8 @@ body {
 }
 
 body {
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 button {
@@ -43,7 +44,8 @@ button {
   min-height: 100vh;
   min-height: 100dvh;
   position: relative;
-  overflow: hidden;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .screen {
@@ -51,8 +53,10 @@ button {
   width: 100%;
   min-height: 100vh;
   min-height: 100dvh;
-  padding: 22px 18px;
-  overflow: hidden;
+  padding: 22px 18px 32px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
 }
 
 .screen.is-active {
@@ -168,8 +172,7 @@ h4 {
 }
 
 .editor-layout {
-  flex: 1;
-  min-height: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -220,26 +223,60 @@ h4 {
   z-index: 4;
 }
 
-/* EYES POSITION FIX — те же размеры, что для no_lashes */
-#eyesLayer {
-  transform: translateY(-50px) scale(0.52);
+/* Базовая посадка глаз — как у no_lashes */
+#eyesLayer,
+#finalEyesLayer {
   transform-origin: center center;
 }
 
-#finalEyesLayer {
+/* Editor eyes sizes */
+#eyesLayer.eyes-style-no_lashes,
+#eyesLayer.eyes-style-winged_liner,
+#eyesLayer.eyes-style-smokey,
+#eyesLayer.eyes-style-narrow {
+  transform: translateY(-50px) scale(0.52);
+}
+
+#eyesLayer.eyes-style-short_lashes {
+  transform: translateY(-50px) scale(0.56);
+}
+
+#eyesLayer.eyes-style-long_lashes {
+  transform: translateY(-50px) scale(0.57);
+}
+
+#eyesLayer.eyes-style-small_waterline {
+  transform: translateY(-50px) scale(0.54);
+}
+
+/* Final badge eyes sizes */
+#finalEyesLayer.eyes-style-no_lashes,
+#finalEyesLayer.eyes-style-winged_liner,
+#finalEyesLayer.eyes-style-smokey,
+#finalEyesLayer.eyes-style-narrow {
   transform: translateY(-40px) scale(0.52);
-  transform-origin: center center;
+}
+
+#finalEyesLayer.eyes-style-short_lashes {
+  transform: translateY(-40px) scale(0.56);
+}
+
+#finalEyesLayer.eyes-style-long_lashes {
+  transform: translateY(-40px) scale(0.57);
+}
+
+#finalEyesLayer.eyes-style-small_waterline {
+  transform: translateY(-40px) scale(0.54);
 }
 
 .editor-panel {
-  flex: 1;
-  min-height: 0;
+  width: 100%;
   display: flex;
   flex-direction: column;
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
   background: rgba(255, 250, 242, 0.62);
-  overflow: hidden;
+  overflow: visible;
 }
 
 .tabs {
@@ -269,11 +306,8 @@ h4 {
 
 .tab-content {
   display: none;
-  flex: 1;
-  min-height: 0;
   padding: 14px;
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
+  overflow: visible;
 }
 
 .tab-content.is-active {
@@ -282,6 +316,10 @@ h4 {
 
 .control-section {
   margin-bottom: 18px;
+}
+
+.control-section:last-child {
+  margin-bottom: 0;
 }
 
 .option-grid {
@@ -482,10 +520,6 @@ h4 {
 }
 
 @media (min-width: 720px) {
-  body {
-    overflow: auto;
-  }
-
   .screen {
     padding: 34px;
   }
@@ -503,7 +537,7 @@ h4 {
   }
 
   .editor-panel {
-    max-height: 560px;
+    max-height: none;
   }
 
   .bottom-button {
