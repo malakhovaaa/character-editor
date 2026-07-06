@@ -34,7 +34,165 @@
 
       <div class="editor-layout">
         <div class="portrait-wrap">
-          <div class="portrait" id="portrait">
+          <div class="avatar-window avatar-window-editor">
+            <div class="portrait" id="portrait">
+              <div class="layer hair-back-layer" id="hairBackLayer"></div>
+              <div class="layer face-layer" id="faceLayer"></div>
+              <div class="layer hair-front-layer" id="hairFrontLayer"></div>
+              <div class="layer eyes-layer" id="eyesLayer"></div>
+              <div class="layer details-layer" id="detailsLayer"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="editor-panel">
+          <nav class="tabs" aria-label="Разделы редактора">
+            <button class="tab-button is-active" type="button" data-tab="face">лицо</button>
+            <button class="tab-button" type="button" data-tab="eyes">глаза</button>
+            <button class="tab-button" type="button" data-tab="hair">волосы</button>
+            <button class="tab-button" type="button" data-tab="details">детали</button>
+          </nav>
+
+          <div class="tab-content is-active" id="tab-face" data-tab-content="face">
+            <div class="control-section">
+              <h3>форма лица</h3>
+              <div class="option-grid" id="faceShapeOptions"></div>
+            </div>
+
+            <div class="control-section">
+              <h3>оттенок кожи</h3>
+              <div class="star-swatch-grid" id="skinToneOptions"></div>
+            </div>
+          </div>
+
+          <div class="tab-content" id="tab-eyes" data-tab-content="eyes">
+            <div class="control-section">
+              <h3>форма глаз</h3>
+              <div class="option-grid" id="eyeShapeOptions"></div>
+            </div>
+
+            <div class="control-section">
+              <h3>цвет глаз</h3>
+              <div class="star-swatch-grid" id="eyeColorOptions"></div>
+            </div>
+          </div>
+
+          <div class="tab-content" id="tab-hair" data-tab-content="hair">
+            <div class="control-section">
+              <h3>прическа</h3>
+              <div class="option-grid" id="hairStyleOptions"></div>
+            </div>
+
+            <div class="control-section">
+              <h3>цвет волос</h3>
+              <div class="star-swatch-grid" id="hairColorOptions"></div>
+            </div>
+          </div>
+
+          <div class="tab-content" id="tab-details" data-tab-content="details">
+            <div class="placeholder-block">
+              детали добавим следующим этапом
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <button class="primary-button bottom-button" id="toTraitsButton" type="button">
+        выбрать черты характера
+      </button>
+    </section>
+
+    <section class="screen screen-traits" id="screen3" data-screen>
+      <header class="screen-header">
+        <p class="eyebrow">CHARACTER EDITOR</p>
+        <h2>черты характера</h2>
+        <p class="subtitle">выбери 5 черт, которые делают персонажа именно твоим</p>
+      </header>
+
+      <div class="traits-topline">
+        <span>выбрано</span>
+        <strong id="traitsCounter">0/5</strong>
+      </div>
+
+      <div class="traits-scroll">
+        <div class="traits-grid" id="traitsGrid"></div>
+      </div>
+
+      <button class="primary-button bottom-button" id="toCongratsButton" type="button" disabled>
+        это я!
+      </button>
+    </section>
+
+    <section class="screen screen-congrats" id="screen4" data-screen>
+      <div class="congrats-card">
+        <p class="eyebrow">CHARACTER EDITOR</p>
+        <h2>поздравляю с созданием персонажа!</h2>
+        <p class="subtitle">
+          ты всегда можешь вернуться сюда<br />
+          и снова кастомизировать своего персонажа
+        </p>
+        <button class="primary-button" id="toResultButton" type="button">
+          посмотреть карточку
+        </button>
+      </div>
+    </section>
+
+    <section class="screen screen-result" id="screen5" data-screen>
+      <header class="screen-header">
+        <p class="eyebrow">CHARACTER EDITOR</p>
+        <h2>это я!</h2>
+      </header>
+
+      <div class="badge-capture" id="badgeCapture">
+        <div class="lanyard"></div>
+
+        <div class="plastic-badge">
+          <div class="paper-pass">
+            <div class="badge-title">
+              <h3>CHARACTER EDITOR</h3>
+              <p>by malakhovaa_</p>
+            </div>
+
+            <div class="avatar-window avatar-window-final">
+              <div class="portrait final-portrait" id="finalPortrait">
+                <div class="layer hair-back-layer" id="finalHairBackLayer"></div>
+                <div class="layer face-layer" id="finalFaceLayer"></div>
+                <div class="layer hair-front-layer" id="finalHairFrontLayer"></div>
+                <div class="layer eyes-layer" id="finalEyesLayer"></div>
+                <div class="layer details-layer" id="finalDetailsLayer"></div>
+              </div>
+            </div>
+
+            <div class="badge-traits">
+              <h4>мои черты</h4>
+              <ul id="finalTraitsList"></ul>
+            </div>
+
+            <p class="badge-footer">
+              created in CHARACTER EDITOR by malakhovaa_
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="result-actions">
+        <button class="primary-button" id="downloadButton" type="button">
+          скачать карточку
+        </button>
+        <button class="secondary-button" id="shareButton" type="button">
+          поделиться в телеграм
+        </button>
+        <button class="secondary-button" id="restartButton" type="button">
+          хочу нового персонажа
+        </button>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>          <div class="portrait" id="portrait">
             <div class="layer hair-back-layer" id="hairBackLayer"></div>
             <div class="layer face-layer" id="faceLayer"></div>
             <div class="layer hair-front-layer" id="hairFrontLayer"></div>
