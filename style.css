@@ -184,15 +184,38 @@ h4 {
   justify-content: center;
 }
 
+/*
+  Окно аватара.
+  Все, что выходит ниже окна, обрезается.
+  Это не дает волосам залезать на табы и кнопки.
+*/
+
+.avatar-window {
+  position: relative;
+  overflow: hidden;
+}
+
+.avatar-window-editor {
+  width: min(72vw, 300px);
+  height: min(84vw, 350px);
+  margin-bottom: 8px;
+}
+
+.avatar-window-final {
+  width: min(54vw, 220px);
+  height: min(64vw, 265px);
+  margin: 0 auto;
+}
+
 .portrait {
   position: relative;
-  width: min(72vw, 300px);
+  width: 100%;
   aspect-ratio: 1 / 1;
   overflow: visible;
 }
 
 .final-portrait {
-  width: min(54vw, 220px);
+  width: 100%;
   margin: 0 auto;
 }
 
@@ -647,8 +670,13 @@ h4 {
     align-items: start;
   }
 
-  .portrait {
+  .avatar-window-editor {
     width: 380px;
+    height: 440px;
+  }
+
+  .portrait {
+    width: 100%;
   }
 
   .editor-panel {
