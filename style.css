@@ -207,15 +207,7 @@ h4 {
   pointer-events: none;
 }
 
-/*
-  Слои персонажа:
-  hair_back  — за лицом
-  face       — база лица
-  eyes       — глаза
-  details    — детали
-  hair_front — передние волосы поверх лица
-*/
-
+/* Слои персонажа */
 .hair-back-layer {
   z-index: 1;
 }
@@ -236,24 +228,17 @@ h4 {
   z-index: 5;
 }
 
-/*
-  Размеры волос пока не регулируем.
-  Следующим этапом можно будет отдельно настроить:
-  .hair-style-straight
-  .hair-style-cascade
-*/
 .hair-back-layer,
 .hair-front-layer {
   transform-origin: center center;
 }
 
-/* Базовая посадка глаз */
+/* Глаза */
 #eyesLayer,
 #finalEyesLayer {
   transform-origin: center center;
 }
 
-/* Editor eyes sizes */
 #eyesLayer.eyes-style-no_lashes,
 #eyesLayer.eyes-style-winged_liner,
 #eyesLayer.eyes-style-smokey {
@@ -272,7 +257,6 @@ h4 {
   transform: translateY(-50px) scale(0.54);
 }
 
-/* Final badge eyes sizes */
 #finalEyesLayer.eyes-style-no_lashes,
 #finalEyesLayer.eyes-style-winged_liner,
 #finalEyesLayer.eyes-style-smokey {
@@ -289,6 +273,14 @@ h4 {
 
 #finalEyesLayer.eyes-style-small_waterline {
   transform: translateY(-40px) scale(0.54);
+}
+
+/* Волосы пока без отдельной регулировки размера */
+#hairBackLayer,
+#hairFrontLayer,
+#finalHairBackLayer,
+#finalHairFrontLayer {
+  transform-origin: center center;
 }
 
 .editor-panel {
@@ -368,7 +360,6 @@ h4 {
   color: var(--paper);
 }
 
-/* Звездочки выбора цвета */
 .star-swatch-grid {
   display: grid;
   grid-template-columns: repeat(7, 1fr);
@@ -420,7 +411,7 @@ h4 {
   transform: scale(1.12);
 }
 
-.star-swatch-button .visually-hidden {
+.visually-hidden {
   position: absolute;
   width: 1px;
   height: 1px;
