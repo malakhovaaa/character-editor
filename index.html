@@ -3,7 +3,6 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-
   <title>CHARACTER EDITOR by malakhovaa_</title>
 
   <link rel="stylesheet" href="style.css" />
@@ -15,165 +14,149 @@
 <body>
   <main class="app">
 
-    <!-- SCREEN 1: START -->
     <section class="screen screen-start is-active" id="screen1" data-screen>
       <div class="start-card">
-        <p class="mini-label">by malakhovaa_</p>
-
-        <h1>
-          CHARACTER<br />
-          EDITOR
-        </h1>
-
-        <p class="start-subtitle">
-          взрослая версия редактора персонажа
-        </p>
-
-        <button class="main-button" type="button" data-go="screen2">
+        <p class="eyebrow">by malakhovaa_</p>
+        <h1>CHARACTER<br />EDITOR</h1>
+        <p class="subtitle">взрослая версия редактора персонажа</p>
+        <button class="primary-button" id="startButton" type="button">
           создать персонажа
         </button>
       </div>
     </section>
 
-    <!-- SCREEN 2: EDITOR -->
     <section class="screen screen-editor" id="screen2" data-screen>
-      <div class="screen-header">
+      <header class="screen-header">
+        <p class="eyebrow">CHARACTER EDITOR</p>
         <h2>создание персонажа</h2>
-        <p>выбери лицо, глаза и цветовые детали</p>
-      </div>
+        <p class="subtitle">выбери лицо, глаза и цветовые детали</p>
+      </header>
 
-      <div class="portrait-wrap">
-        <div class="portrait" id="portrait">
-          <div class="layer face-layer" id="faceLayer"></div>
-          <div class="layer hair-layer" id="hairLayer"></div>
-          <div class="layer eyes-layer" id="eyesLayer"></div>
-          <div class="layer details-layer" id="detailsLayer"></div>
+      <div class="editor-layout">
+        <div class="portrait-wrap">
+          <div class="portrait" id="portrait">
+            <div class="layer face-layer" id="faceLayer"></div>
+            <div class="layer hair-layer" id="hairLayer"></div>
+            <div class="layer eyes-layer" id="eyesLayer"></div>
+            <div class="layer details-layer" id="detailsLayer"></div>
+          </div>
+        </div>
+
+        <div class="editor-panel">
+          <nav class="tabs" aria-label="Разделы редактора">
+            <button class="tab-button is-active" type="button" data-tab="face">лицо</button>
+            <button class="tab-button" type="button" data-tab="eyes">глаза</button>
+            <button class="tab-button" type="button" data-tab="hair">волосы</button>
+            <button class="tab-button" type="button" data-tab="details">детали</button>
+          </nav>
+
+          <div class="tab-content is-active" id="tab-face" data-tab-content="face">
+            <div class="control-section">
+              <h3>форма лица</h3>
+              <div class="option-grid" id="faceShapeOptions"></div>
+            </div>
+
+            <div class="control-section">
+              <h3>оттенок кожи</h3>
+              <div class="option-grid" id="skinToneOptions"></div>
+            </div>
+          </div>
+
+          <div class="tab-content" id="tab-eyes" data-tab-content="eyes">
+            <div class="control-section">
+              <h3>форма глаз</h3>
+              <div class="option-grid" id="eyeShapeOptions"></div>
+            </div>
+
+            <div class="control-section">
+              <h3>цвет глаз</h3>
+              <div class="option-grid" id="eyeColorOptions"></div>
+            </div>
+          </div>
+
+          <div class="tab-content" id="tab-hair" data-tab-content="hair">
+            <div class="placeholder-block">
+              волосы добавим следующим этапом
+            </div>
+          </div>
+
+          <div class="tab-content" id="tab-details" data-tab-content="details">
+            <div class="placeholder-block">
+              детали добавим следующим этапом
+            </div>
+          </div>
         </div>
       </div>
 
-      <div class="editor-panel">
-        <div class="tabs">
-          <button class="tab-button is-active" type="button" data-tab="face">лицо</button>
-          <button class="tab-button" type="button" data-tab="eyes">глаза</button>
-          <button class="tab-button" type="button" data-tab="hair">волосы</button>
-          <button class="tab-button" type="button" data-tab="details">детали</button>
-        </div>
-
-        <div class="tab-content is-active" id="tab-face">
-          <div class="control-group">
-            <p class="control-title">форма лица</p>
-            <div class="options-row" id="faceShapeOptions"></div>
-          </div>
-
-          <div class="control-group">
-            <p class="control-title">оттенок кожи</p>
-            <div class="color-row" id="skinToneOptions"></div>
-          </div>
-        </div>
-
-        <div class="tab-content" id="tab-eyes">
-          <div class="control-group">
-            <p class="control-title">форма глаз</p>
-            <div class="options-row" id="eyeShapeOptions"></div>
-          </div>
-
-          <div class="control-group">
-            <p class="control-title">цвет глаз</p>
-            <div class="color-row" id="eyeColorOptions"></div>
-          </div>
-        </div>
-
-        <div class="tab-content" id="tab-hair">
-          <div class="empty-state">
-            волосы подключим следующим этапом
-          </div>
-        </div>
-
-        <div class="tab-content" id="tab-details">
-          <div class="empty-state">
-            детали подключим после волос
-          </div>
-        </div>
-      </div>
-
-      <button class="main-button bottom-button" type="button" data-go="screen3">
+      <button class="primary-button bottom-button" id="toTraitsButton" type="button">
         выбрать черты характера
       </button>
     </section>
 
-    <!-- SCREEN 3: TRAITS -->
     <section class="screen screen-traits" id="screen3" data-screen>
-      <div class="screen-header">
+      <header class="screen-header">
+        <p class="eyebrow">CHARACTER EDITOR</p>
         <h2>черты характера</h2>
-        <p>выбери 5 черт, которые делают персонажа именно твоим</p>
-      </div>
+        <p class="subtitle">выбери 5 черт, которые делают персонажа именно твоим</p>
+      </header>
 
-      <div class="traits-top">
+      <div class="traits-topline">
         <span>выбрано</span>
         <strong id="traitsCounter">0/5</strong>
       </div>
 
-      <div class="traits-scroll" id="traitsOptions"></div>
+      <div class="traits-scroll">
+        <div class="traits-grid" id="traitsGrid"></div>
+      </div>
 
-      <button class="main-button bottom-button" type="button" id="createCardBtn">
+      <button class="primary-button bottom-button" id="toCongratsButton" type="button" disabled>
         это я!
       </button>
     </section>
 
-    <!-- SCREEN 4: CONGRATS -->
     <section class="screen screen-congrats" id="screen4" data-screen>
       <div class="congrats-card">
+        <p class="eyebrow">CHARACTER EDITOR</p>
         <h2>поздравляю с созданием персонажа!</h2>
-
-        <p>
+        <p class="subtitle">
           ты всегда можешь вернуться сюда<br />
           и снова кастомизировать своего персонажа
         </p>
-
-        <button class="main-button" type="button" data-go="screen5">
+        <button class="primary-button" id="toResultButton" type="button">
           посмотреть карточку
         </button>
       </div>
     </section>
 
-    <!-- SCREEN 5: RESULT -->
     <section class="screen screen-result" id="screen5" data-screen>
-      <div class="badge-card" id="finalCard">
-        <div class="badge-lanyard"></div>
+      <header class="screen-header">
+        <p class="eyebrow">CHARACTER EDITOR</p>
+        <h2>это я!</h2>
+      </header>
 
-        <div class="badge-title">это я!</div>
+      <div class="badge-capture" id="badgeCapture">
+        <div class="lanyard"></div>
 
-        <div class="plastic-holder">
-          <div class="holder-holes">
-            <span></span>
-            <span></span>
-          </div>
-
+        <div class="plastic-badge">
           <div class="paper-pass">
-            <div class="pass-header">
-              <div>
-                <p class="pass-kicker">CHARACTER EDITOR</p>
-                <p class="pass-byline">by malakhovaa_</p>
-              </div>
-
-              <div class="hand-star">★</div>
+            <div class="badge-title">
+              <h3>CHARACTER EDITOR</h3>
+              <p>by malakhovaa_</p>
             </div>
 
-            <div class="badge-avatar-frame">
-              <div class="portrait final-portrait" id="finalPortrait">
-                <div class="layer face-layer" id="finalFaceLayer"></div>
-                <div class="layer hair-layer" id="finalHairLayer"></div>
-                <div class="layer eyes-layer" id="finalEyesLayer"></div>
-                <div class="layer details-layer" id="finalDetailsLayer"></div>
-              </div>
+            <div class="portrait final-portrait" id="finalPortrait">
+              <div class="layer face-layer" id="finalFaceLayer"></div>
+              <div class="layer hair-layer" id="finalHairLayer"></div>
+              <div class="layer eyes-layer" id="finalEyesLayer"></div>
+              <div class="layer details-layer" id="finalDetailsLayer"></div>
             </div>
 
             <div class="badge-traits">
-              <p class="traits-title">мои черты</p>
-              <div id="finalTraitsList"></div>
+              <h4>мои черты</h4>
+              <ul id="finalTraitsList"></ul>
             </div>
 
-            <p class="pass-footer">
+            <p class="badge-footer">
               created in CHARACTER EDITOR by malakhovaa_
             </p>
           </div>
@@ -181,15 +164,13 @@
       </div>
 
       <div class="result-actions">
-        <button class="main-button" type="button" id="downloadCardBtn">
+        <button class="primary-button" id="downloadButton" type="button">
           скачать карточку
         </button>
-
-        <button class="secondary-button" type="button" id="shareTelegramBtn">
+        <button class="secondary-button" id="shareButton" type="button">
           поделиться в телеграм
         </button>
-
-        <button class="secondary-button" type="button" id="newCharacterBtn">
+        <button class="secondary-button" id="restartButton" type="button">
           хочу нового персонажа
         </button>
       </div>
