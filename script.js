@@ -1,8 +1,10 @@
 const ASSET_BASE_PATH = "assets/avatar/base";
 const ASSET_EYES_PATH = "assets/avatar/eyes";
+const ASSET_HAIR_PATH = "assets/avatar/hair";
 
 const DEFAULT_SKIN_TONE = "very_light";
 const DEFAULT_EYE_COLOR = "light_gray";
+const DEFAULT_HAIR_COLOR = "light_brown";
 
 const FACE_SHAPES = [
   { id: "oval", label: "овал" },
@@ -35,6 +37,22 @@ const EYE_COLORS = [
   { id: "blue", label: "голубые", swatch: "#7fb2d9" },
   { id: "green", label: "зеленые", swatch: "#6e9a72" },
   { id: "almost_black", label: "почти черные", swatch: "#171412" }
+];
+
+const HAIR_STYLES = [
+  { id: null, label: "без волос" },
+  { id: "straight", label: "прямые" },
+  { id: "cascade", label: "каскад" }
+];
+
+const HAIR_COLORS = [
+  { id: "white", label: "белые", swatch: "#f1eee7" },
+  { id: "blonde", label: "блонд", swatch: "#d8bd82" },
+  { id: "light_brown", label: "светло-русые", swatch: "#a9825d" },
+  { id: "dark", label: "темные", swatch: "#4a3026" },
+  { id: "orange_red", label: "рыжие", swatch: "#b65b2e" },
+  { id: "cherry_red", label: "вишневые", swatch: "#6f1f2c" },
+  { id: "black", label: "черные", swatch: "#151312" }
 ];
 
 const TRAITS = [
@@ -72,6 +90,9 @@ const state = {
   eyeShape: "no_lashes",
   eyeColor: DEFAULT_EYE_COLOR,
 
+  hairStyle: null,
+  hairColor: DEFAULT_HAIR_COLOR,
+
   selectedTraits: []
 };
 
@@ -84,6 +105,8 @@ document.addEventListener("DOMContentLoaded", () => {
   renderSkinToneOptions();
   renderEyeShapeOptions();
   renderEyeColorOptions();
+  renderHairStyleOptions();
+  renderHairColorOptions();
   renderTraits();
 
   updateAvatar();
@@ -164,11 +187,6 @@ function renderFaceShapeOptions() {
       isActive: state.faceShape === shape.id,
       onClick: () => {
         state.faceShape = shape.id;
-
-        /*
-          При клике на любую форму лица сначала показываем:
-          base_skin_very_light_{shape}.png
-        */
         state.skinTone = DEFAULT_SKIN_TONE;
 
         renderFaceShapeOptions();
@@ -211,11 +229,6 @@ function renderEyeShapeOptions() {
       isActive: state.eyeShape === shape.id,
       onClick: () => {
         state.eyeShape = shape.id;
-
-        /*
-          При клике на любую форму глаз сначала показываем:
-          light_gray-версию выбранной формы.
-        */
         state.eyeColor = DEFAULT_EYE_COLOR;
 
         renderEyeShapeOptions();
@@ -240,6 +253,57 @@ function renderEyeColorOptions() {
       onClick: () => {
         state.eyeColor = color.id;
         renderEyeColorOptions();
+        updateAvatar();
+      }
+    });
+
+    container.appendChild(button);
+  });
+}
+
+function renderHairStyleOptions() {
+  const container = document.getElementById("hairStyleOptions");
+  container.innerHTML = "";
+
+  HAIR_STYLES.forEach((style) => {
+    const button = createOptionButton({
+      label: style.label,
+      isActive: state.hairStyle === style.id,
+      onClick: () => {
+        state.hairStyle = style.id;
+
+        if (state.hairStyle && !state.hairColor) {
+          state.hairColor = DEFAULT_HAIR_COLOR;
+        }
+
+        renderHairStyleOptions();
+        renderHairColorOptions();
+        updateAvatar();
+      }
+    });
+
+    container.appendChild(button);
+  });
+}
+
+function renderHairColorOptions() {
+  const container = document.getElementById("hairColorOptions");
+  container.innerHTML = "";
+
+  HAIR_COLORS.forEach((color) => {
+    const button = createStarSwatchButton({
+      label: color.label,
+      color: color.swatch,
+      isActive: state.hairColor === color.id,
+      onClick: () => {
+        state.hairColor = color.id;
+
+        if (!state.hairStyle) {
+          state.hairStyle = "straight";
+        }
+
+        renderHairStyleOptions();
+        renderHairColorOptions();
         updateAvatar();
       }
     });
@@ -329,27 +393,27 @@ function getFaceImagePath() {
 }
 
 function getPrimaryEyesImagePath() {
-  /*
-    Новый формат:
-    eyes_{color}_{shape}_.png
-
-    Пример:
-    eyes_light_gray_no_lashes_.png
-  */
   return `${ASSET_EYES_PATH}/eyes_${state.eyeColor}_${state.eyeShape}_.png`;
 }
 
 function getFallbackEyesImagePath() {
-  /*
-    Старый формат:
-    eyes_{shape}_{color}.png
-
-    Пример:
-    eyes_no_lashes_light_gray.png
-
-    Нужен, чтобы глаза не пропадали, если assets еще не переименованы.
-  */
   return `${ASSET_EYES_PATH}/eyes_${state.eyeShape}_${state.eyeColor}.png`;
+}
+
+function getHairBackImagePath() {
+  if (!state.hairStyle) {
+    return "";
+  }
+
+  return `${ASSET_HAIR_PATH}/hair_${state.hairStyle}_${state.hairColor}_back.png`;
+}
+
+function getHairFrontImagePath() {
+  if (!state.hairStyle) {
+    return "";
+  }
+
+  return `${ASSET_HAIR_PATH}/hair_${state.hairStyle}_${state.hairColor}_front.png`;
 }
 
 function updateAvatar() {
@@ -361,9 +425,13 @@ function updateAvatar() {
     getFallbackEyesImagePath()
   );
 
-  applyEyeStyleClass("eyesLayer", state.eyeShape);
+  setBackground("hairBackLayer", getHairBackImagePath());
+  setBackground("hairFrontLayer", getHairFrontImagePath());
 
-  setBackground("hairLayer", "");
+  applyEyeStyleClass("eyesLayer", state.eyeShape);
+  applyHairStyleClass("hairBackLayer", state.hairStyle);
+  applyHairStyleClass("hairFrontLayer", state.hairStyle);
+
   setBackground("detailsLayer", "");
 }
 
@@ -376,9 +444,13 @@ function updateFinalCard() {
     getFallbackEyesImagePath()
   );
 
-  applyEyeStyleClass("finalEyesLayer", state.eyeShape);
+  setBackground("finalHairBackLayer", getHairBackImagePath());
+  setBackground("finalHairFrontLayer", getHairFrontImagePath());
 
-  setBackground("finalHairLayer", "");
+  applyEyeStyleClass("finalEyesLayer", state.eyeShape);
+  applyHairStyleClass("finalHairBackLayer", state.hairStyle);
+  applyHairStyleClass("finalHairFrontLayer", state.hairStyle);
+
   setBackground("finalDetailsLayer", "");
 
   const finalTraitsList = document.getElementById("finalTraitsList");
@@ -408,6 +480,23 @@ function applyEyeStyleClass(elementId, eyeShape) {
   );
 
   element.classList.add(`eyes-style-${eyeShape}`);
+}
+
+function applyHairStyleClass(elementId, hairStyle) {
+  const element = document.getElementById(elementId);
+
+  if (!element) {
+    return;
+  }
+
+  element.classList.remove(
+    "hair-style-straight",
+    "hair-style-cascade"
+  );
+
+  if (hairStyle) {
+    element.classList.add(`hair-style-${hairStyle}`);
+  }
 }
 
 function setBackground(elementId, imagePath) {
@@ -463,12 +552,17 @@ function resetCharacter() {
   state.eyeShape = "no_lashes";
   state.eyeColor = DEFAULT_EYE_COLOR;
 
+  state.hairStyle = null;
+  state.hairColor = DEFAULT_HAIR_COLOR;
+
   state.selectedTraits = [];
 
   renderFaceShapeOptions();
   renderSkinToneOptions();
   renderEyeShapeOptions();
   renderEyeColorOptions();
+  renderHairStyleOptions();
+  renderHairColorOptions();
   updateAvatar();
   updateTraitsState();
 }
