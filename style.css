@@ -344,52 +344,65 @@ h4 {
   color: var(--paper);
 }
 
-/* Цветовые кнопки */
-.swatch-grid {
+/* Звездочки выбора цвета */
+.star-swatch-grid {
   display: grid;
   grid-template-columns: repeat(6, 1fr);
   gap: 8px;
+  align-items: center;
 }
 
-.swatch-button {
+.star-swatch-button {
   position: relative;
   width: 100%;
   aspect-ratio: 1 / 1;
   min-height: 38px;
-  border: 1px solid var(--line-strong);
-  border-radius: 999px;
-  background: var(--swatch-color);
+  border: 0;
+  background: transparent;
   cursor: pointer;
-  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.34);
+  display: grid;
+  place-items: center;
+  padding: 0;
 }
 
-.swatch-button.is-active {
-  border-color: var(--ink);
-  box-shadow:
-    inset 0 0 0 2px rgba(255, 255, 255, 0.62),
-    0 0 0 2px var(--ink);
-}
-
-.swatch-button::after {
-  content: attr(aria-label);
-  position: absolute;
-  left: 50%;
-  bottom: -22px;
-  transform: translateX(-50%);
-  display: none;
-  padding: 3px 7px;
-  border-radius: 999px;
-  background: var(--ink);
-  color: var(--paper);
-  white-space: nowrap;
-  font-size: 10px;
-  line-height: 1;
-  z-index: 10;
-}
-
-.swatch-button:active::after,
-.swatch-button:focus-visible::after {
+.star-swatch-button::before {
+  content: "★";
   display: block;
+  color: var(--swatch-color);
+  font-size: 34px;
+  line-height: 1;
+  text-shadow:
+    0 0 0.5px rgba(23, 20, 18, 0.28),
+    0 1px 4px rgba(23, 20, 18, 0.12);
+  transform: scale(1);
+  transition: transform 0.16s ease, filter 0.16s ease;
+}
+
+.star-swatch-button.is-active::before {
+  transform: scale(1.26);
+  filter: drop-shadow(0 0 0 var(--ink));
+}
+
+.star-swatch-button.is-active::after {
+  content: "";
+  position: absolute;
+  width: 34px;
+  height: 34px;
+  border: 1.5px solid var(--ink);
+  border-radius: 999px;
+}
+
+.star-swatch-button:active::before {
+  transform: scale(1.12);
+}
+
+.star-swatch-button .visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
 }
 
 .placeholder-block {
